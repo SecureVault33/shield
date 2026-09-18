@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecureVault — Documentation Technique Complète</title>
+<meta name="description" content="Documentation technique complète de SecureVault : architecture, algorithmes de chiffrement, modèle de menace, format de fichier, et guide d'utilisation détaillé.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #050505;
+  --bg-base: #0a0a0a;
+  --bg-raised: #111;
+  --bg-surface: #161616;
+  --bg-code: #0d1117;
+  --border-subtle: #1a1a1a;
+  --border-mid: #252525;
+  --text-primary: #e0e0e0;
+  --text-secondary: #999;
+  --text-muted: #5a5a5a;
+  --accent: #c0392b;
+  --accent-light: #e74c3c;
+  --accent-glow: rgba(192, 57, 43, 0.12);
+  --green: #27ae60;
+  --orange: #e67e22;
+  --blue: #3498db;
+  --yellow: #f1c40f;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── LAYOUT ─── */
+.page-wrapper {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* ─── SIDEBAR NAV ─── */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: 260px;
+  background: var(--bg-base);
+  border-right: 1px solid var(--border-subtle);
+  overflow-y: auto;
+  padding: 1.5rem 0;
+  z-index: 50;
+}
+.sidebar-brand {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+.sidebar-brand .shield {
+  width: 26px; height: 26px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+}
+.sidebar-brand .brand-text {
+  font-weight: 700; font-size: 0.95rem; color: var(--text-primary);
+}
+.sidebar-brand .version {
+  font-size: 0.7rem; color: var(--text-muted);
+  background: var(--bg-surface);
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  margin-left: 0.4rem;
+}
+.sidebar-section {
+  padding: 0.6rem 1.25rem 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.sidebar a {
+  display: block;
+  padding: 0.4rem 1.25rem 0.4rem 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar a:hover {
+  color: var(--text-primary);
+  background: var(--bg-raised);
+}
+.sidebar a.active {
+  color: var(--accent-light);
+  border-left-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* ─── MAIN CONTENT ─── */
+.main-content {
+  grid-column: 2;
+  padding: 3rem 4rem 6rem;
+  max-width: 860px;
+}
+
+/* ─── TYPOGRAPHY ─── */
+h1 {
+  font-size: 2.2rem; font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+h1 + .subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  line-height: 1.65;
+}
+h2 {
+  font-size: 1.5rem; font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 3.5rem 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+h2:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+h3 {
+  font-size: 1.1rem; font-weight: 600;
+  margin: 2rem 0 0.75rem;
+  color: var(--text-primary);
+}
+h4 {
+  font-size: 0.95rem; font-weight: 600;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--accent-light);
+}
+p { margin-bottom: 1rem; color: var(--text-secondary); }
+strong { color: var(--text-primary); font-weight: 600; }
+
+/* ─── CODE ─── */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  background: var(--bg-code);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  color: var(--accent-light);
+}
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border-mid);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  margin: 1rem 0 1.5rem;
+  line-height: 1.55;
+}
+pre code {
+  background: none; border: none; padding: 0;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+.code-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+/* ─── TABLES ─── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.88rem;
+}
+th {
+  text-align: left;
+  padding: 0.7rem 1rem;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border-mid);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+}
+td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+tr:last-child td { border-bottom: none; }
+
+/* ─── CALLOUTS ─── */
+.callout {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  border-left: 3px solid;
+}
+.callout p { margin: 0; }
+.callout-info {
+  background: rgba(52,152,219,0.08);
+  border-color: var(--blue);
+}
+.callout-info p { color: #7dbce8; }
+.callout-warning {
+  background: rgba(230,126,34,0.08);
+  border-color: var(--orange);
+}
+.callout-warning p { color: #e8a55a; }
+.callout-danger {
+  background: rgba(192,57,43,0.08);
+  border-color: var(--accent);
+}
+.callout-danger p { color: #e87a6f; }
+.callout-success {
+  background: rgba(39,174,96,0.08);
+  border-color: var(--green);
+}
+.callout-success p { color: #5dc98a; }
+
+/* ─── DIAGRAM ─── */
+.diagram {
+  background: var(--bg-code);
+  border: 1px solid var(--border-mid);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  color: var(--text-secondary);
+  white-space: pre;
+}
+
+/* ─── BADGES ─── */
+.badge {
+  display: inline-block;
+  font-size: 0.7rem; font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+.badge-green { background: rgba(39,174,96,0.15); color: var(--green); }
+.badge-orange { background: rgba(230,126,34,0.15); color: var(--orange); }
+.badge-red { background: rgba(192,57,43,0.15); color: var(--accent-light); }
+.badge-blue { background: rgba(52,152,219,0.15); color: var(--blue); }
+
+/* ─── SPECS GRID ─── */
+.specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.spec-card {
+  padding: 1.25rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+}
+.spec-card h4 { margin-top: 0; }
+.spec-card p { font-size: 0.88rem; margin: 0; }
+
+/* ─── TOC ─── */
+.toc {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-mid);
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  margin: 2rem 0 3rem;
+}
+.toc h3 {
+  margin: 0 0 1rem; font-size: 0.95rem;
+  color: var(--text-primary);
+}
+.toc ol {
+  list-style: none; counter-reset: toc;
+  padding: 0;
+}
+.toc ol li {
+  counter-increment: toc;
+  margin-bottom: 0.4rem;
+}
+.toc ol li a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.15s;
+}
+.toc ol li a::before {
+  content: counter(toc) ". ";
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+.toc ol li a:hover { color: var(--accent-light); }
+
+/* ─── FOOTER ─── */
+.doc-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .page-wrapper { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main-content { padding: 2rem 1.25rem 4rem; grid-column: 1; }
+  .specs-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .sidebar { display: none; }
+  .page-wrapper { grid-template-columns: 1fr; }
+  body { background: white; color: #111; }
+  .main-content { padding: 1rem; max-width: 100%; }
+  h1, h2, h3, h4, strong { color: #111; }
+  p, td, .callout p { color: #333; }
+  code { background: #f4f4f4; color: #c0392b; border-color: #ddd; }
+  pre { background: #f8f8f8; border-color: #ddd; }
+  pre code { color: #333; }
+  .callout { border-left-width: 3px; }
+  th { background: #f0f0f0; }
+  td { border-color: #e0e0e0; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <a href="#" class="sidebar-brand">
+    <div class="shield">🛡</div>
+    <span class="brand-text">SecureVault</span>
+    <span class="version">v1.0.3</span>
+  </a>
+
+  <div class="sidebar-section">Introduction</div>
+  <a href="#overview">Vue d'ensemble</a>
+  <a href="#threat-model">Modèle de menace</a>
+  <a href="#antivirus">Antivirus et sécurité</a>
+
+  <div class="sidebar-section">Architecture</div>
+  <a href="#architecture">Structure du projet</a>
+  <a href="#stack">Stack technique</a>
+
+  <div class="sidebar-section">Mode Rapide</div>
+  <a href="#acl-overview">Fonctionnement ACL</a>
+  <a href="#acl-flow">Flux de verrouillage</a>
+  <a href="#acl-limits">Limites connues</a>
+
+  <div class="sidebar-section">Mode Fort</div>
+  <a href="#crypto-overview">Chiffrement AES-256-GCM</a>
+  <a href="#kdf">Dérivation de clé Argon2id</a>
+  <a href="#vault-format">Format .vault</a>
+  <a href="#recovery">Clés de récupération</a>
+  <a href="#secure-delete">Suppression sécurisée</a>
+
+  <div class="sidebar-section">Application</div>
+  <a href="#ui">Interface utilisateur</a>
+  <a href="#dashboard">Centre d'administration</a>
+  <a href="#batch">Multi-fichiers</a>
+  <a href="#licensing">Système de licence</a>
+
+  <div class="sidebar-section">Référence</div>
+  <a href="#install">Installation</a>
+  <a href="#faq-tech">FAQ technique</a>
+  <a href="#changelog">Changelog</a>
+</nav>
+
+<!-- MAIN -->
+<main class="main-content">
+
+<h1>Documentation Technique</h1>
+<p class="subtitle">
+  Architecture détaillée, algorithmes cryptographiques, modèle de menace et guide complet de SecureVault — l'outil de sécurisation de fichiers pour Windows.
+</p>
+
+<nav class="toc">
+  <h3>Table des matières</h3>
+  <ol>
+    <li><a href="#overview">Vue d'ensemble du produit</a></li>
+    <li><a href="#threat-model">Modèle de menace</a></li>
+    <li><a href="#antivirus">Antivirus et alertes de sécurité</a></li>
+    <li><a href="#architecture">Architecture et stack technique</a></li>
+    <li><a href="#acl-overview">Mode Rapide — Verrouillage ACL</a></li>
+    <li><a href="#crypto-overview">Mode Fort — Chiffrement AES-256-GCM</a></li>
+    <li><a href="#vault-format">Format de fichier .vault</a></li>
+    <li><a href="#dashboard">Centre d'administration</a></li>
+    <li><a href="#licensing">Système de licence</a></li>
+    <li><a href="#install">Installation et déploiement</a></li>
+    <li><a href="#faq-tech">FAQ technique</a></li>
+  </ol>
+</nav>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="overview">Vue d'ensemble</h2>
+
+<p>
+  SecureVault est un outil de sécurisation de fichiers et dossiers pour Windows 10/11, accessible directement depuis le menu contextuel de l'Explorateur (clic droit). Il propose deux niveaux de protection distincts selon le besoin de l'utilisateur.
+</p>
+
+<div class="specs-grid">
+  <div class="spec-card">
+    <h4>🔒 Mode Rapide</h4>
+    <p>Verrouillage instantané via les permissions NTFS (ACL). Bloque l'accès en un clic. Réversible par un administrateur.</p>
+  </div>
+  <div class="spec-card">
+    <h4>🛡️ Mode Fort</h4>
+    <p>Chiffrement complet AES-256-GCM avec dérivation Argon2id. Protection absolue, même en cas de vol physique du disque.</p>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr><th>Caractéristique</th><th>Détail</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Langage</td><td>Rust (binaire natif, aucun runtime)</td></tr>
+    <tr><td>Taille de l'exécutable</td><td>&lt; 10 Mo</td></tr>
+    <tr><td>Systèmes supportés</td><td>Windows 10 version 1903+, Windows 11</td></tr>
+    <tr><td>Architectures</td><td>x86_64</td></tr>
+    <tr><td>Dépendances externes</td><td>Aucune</td></tr>
+    <tr><td>Connexion internet</td><td>Requise une seule fois pour l'activation de la licence Pro (API LemonSqueezy). Tout le reste est local.</td></tr>
+    <tr><td>Données transmises</td><td>Activation uniquement : clé de licence + empreinte machine. Aucun fichier, aucune donnée personnelle.</td></tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="threat-model">Modèle de menace</h2>
+
+<p>
+  Il est essentiel de comprendre ce contre quoi chaque mode vous protège — et ce contre quoi il <strong>ne vous protège pas</strong>. La transparence sur les limites d'un outil de sécurité est aussi importante que ses capacités.
+</p>
+
+<h3>Mode Rapide — Contre quoi il protège</h3>
+<table>
+  <thead>
+    <tr><th>Scénario</th><th>Protégé ?</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Un collègue ouvre accidentellement un dossier sur votre poste</td><td><span class="badge badge-green">Oui</span></td></tr>
+    <tr><td>Un enfant parcourt vos fichiers sur le PC familial</td><td><span class="badge badge-green">Oui</span></td></tr>
+    <tr><td>Un logiciel tente d'accéder à un fichier protégé</td><td><span class="badge badge-green">Oui</span></td></tr>
+    <tr><td>Un utilisateur administrateur déterminé</td><td><span class="badge badge-orange">Contournable</span></td></tr>
+    <tr><td>Vol physique du disque dur</td><td><span class="badge badge-red">Non</span></td></tr>
+    <tr><td>Malware avec privilèges administrateur</td><td><span class="badge badge-red">Non</span></td></tr>
+  </tbody>
+</table>
+
+<h3>Mode Fort — Contre quoi il protège</h3>
+<table>
+  <thead>
+    <tr><th>Scénario</th><th>Protégé ?</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Tous les scénarios du mode Rapide</td><td><span class="badge badge-green">Oui</span></td></tr>
+    <tr><td>Vol physique du disque dur ou de l'ordinateur</td><td><span class="badge badge-green">Oui</span></td></tr>
+    <tr><td>Analyse forensique du disque</td><td><span class="badge badge-green">Oui</span></td></tr>
+    <tr><td>Accès administrateur au système</td><td><span class="badge badge-green">Oui</span></td></tr>
+    <tr><td>Attaque par force brute sur le mot de passe</td><td><span class="badge badge-green">Oui (Argon2id)</span></td></tr>
+    <tr><td>Enregistreur de frappe (keylogger) actif sur le système</td><td><span class="badge badge-red">Non</span></td></tr>
+    <tr><td>Perte du mot de passe ET de la clé de récupération</td><td><span class="badge badge-red">Données perdues</span></td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout-warning">
+  <p><strong>Suppression sécurisée et SSD.</strong> La suppression sécurisée (3 passes d'écrasement) est efficace sur les disques durs traditionnels (HDD). Sur les SSD, le mécanisme de wear leveling peut conserver des copies résiduelles des données dans des blocs inaccessibles. Pour une protection maximale sur SSD, le mode Fort (chiffrement) est recommandé : le fichier original n'a jamais besoin d'être réellement "effacé" puisque seule la version chiffrée subsiste.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="antivirus">Antivirus et alertes de sécurité</h2>
+
+<p>
+  Lors de la première exécution de SecureVault, <strong>il est normal que Windows Defender ou votre antivirus affiche une alerte</strong>. Cela se produit pour deux raisons.
+</p>
+
+<p>
+  Premièrement, SecureVault modifie les permissions de fichiers (ACL NTFS) et les attributs de fichiers — des opérations que les antivirus surveillent car elles sont parfois utilisées par des logiciels malveillants. SecureVault utilise ces mécanismes de façon légitime et documentée.
+</p>
+
+<p>
+  Deuxièmement, l'exécutable n'est pas (encore) signé avec un certificat de signature de code. Windows SmartScreen peut afficher un avertissement "Éditeur inconnu" au premier lancement. Cliquez sur "Informations complémentaires" puis "Exécuter quand même" pour autoriser l'exécution.
+</p>
+
+<div class="callout callout-success">
+  <p><strong>Code source vérifiable.</strong> Le code source de la version gratuite de SecureVault est intégralement disponible sur GitHub. Vous pouvez inspecter chaque ligne de code, vérifier les algorithmes cryptographiques utilisés, et compiler le binaire vous-même si vous le souhaitez. La transparence est un pilier de la confiance en matière de sécurité.</p>
+</div>
+
+<h3>Comment ajouter SecureVault en exception</h3>
+<p>
+  Si votre antivirus bloque ou met en quarantaine SecureVault, ajoutez le dossier d'installation (<code>C:\Program Files\SecureVault\</code>) à la liste des exclusions de votre antivirus. Pour Windows Defender : Paramètres → Mise à jour et sécurité → Sécurité Windows → Protection contre les virus et menaces → Gérer les paramètres → Exclusions → Ajouter une exclusion → Dossier.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="architecture">Architecture</h2>
+
+<h3 id="stack">Stack technique</h3>
+<table>
+  <thead>
+    <tr><th>Composant</th><th>Technologie</th><th>Rôle</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Langage</td><td>Rust (edition 2021)</td><td>Performance, sécurité mémoire, binaire autonome</td></tr>
+    <tr><td>API Windows</td><td>Crate <code>windows-rs</code></td><td>ACL, registre, UI Win32, GDI</td></tr>
+    <tr><td>Chiffrement</td><td>Crate <code>aes-gcm</code></td><td>AES-256-GCM authentifié</td></tr>
+    <tr><td>Dérivation de clé</td><td>Crate <code>argon2</code></td><td>Argon2id</td></tr>
+    <tr><td>Nettoyage mémoire</td><td>Crate <code>zeroize</code></td><td>Zéroïsation des secrets</td></tr>
+    <tr><td>CLI</td><td>Crate <code>clap</code></td><td>Parsing des commandes</td></tr>
+    <tr><td>Archivage</td><td>Crate <code>tar</code></td><td>Empaquetage des dossiers</td></tr>
+    <tr><td>HTTP client</td><td>Crate <code>ureq</code></td><td>Activation de licence via API LemonSqueezy</td></tr>
+    <tr><td>Sérialisation</td><td>Crate <code>serde</code> + <code>serde_json</code></td><td>Parsing des réponses API</td></tr>
+    <tr><td>Installeur</td><td>Inno Setup</td><td>Installation/désinstallation graphique</td></tr>
+  </tbody>
+</table>
+
+<h3>Structure du projet</h3>
+<div class="diagram">securevault/
+├── src/
+│   ├── main.rs                 Dispatch des commandes, orchestration
+│   ├── cli.rs                  Sous-commandes clap (lock, unlock, encrypt, decrypt, install, ...)
+│   ├── errors.rs               Types d'erreur unifiés
+│   ├── i18n.rs                 Internationalisation FR/EN
+│   ├── batch.rs                Coordination multi-fichiers (mutex + file d'attente)
+│   ├── acl/
+│   │   ├── mod.rs              Orchestration lock/unlock
+│   │   └── permissions.rs      Manipulation DACL Win32, ADS, attributs
+│   ├── crypto/
+│   │   ├── mod.rs              Exports publics
+│   │   ├── aes_gcm.rs          Chiffrement/déchiffrement fichiers et dossiers
+│   │   ├── kdf.rs              Argon2id (dérivation + vérification)
+│   │   ├── recovery.rs         Clés de récupération
+│   │   ├── archive.rs          Empaquetage/extraction tar pour dossiers
+│   │   └── secure_delete.rs    Écrasement 3 passes + suppression
+│   ├── ui/
+│   │   ├── mod.rs              Popups mot de passe Win32
+│   │   ├── theme.rs            Système de thèmes (rouge/bleu/vert)
+│   │   ├── gfx.rs              Primitives graphiques GDI partagées
+│   │   └── license_prompt.rs   Popups d'activation de licence
+│   ├── dashboard/
+│   │   ├── mod.rs              Exports
+│   │   ├── window.rs           Fenêtre principale du dashboard
+│   │   ├── registry.rs         CRUD vault_registry.json
+│   │   ├── settings.rs         Configuration persistante
+│   │   ├── master.rs           Master Password
+│   │   ├── force_unlock.rs     Déverrouillage forcé admin
+│   │   ├── notifier.rs         Rappels de sécurité
+│   │   └── onboarding.rs       Écran de bienvenue 3 slides
+│   ├── registry/
+│   │   └── mod.rs              Menu contextuel + raccourci Démarrer
+│   └── license/
+│       └── mod.rs              Activation et vérification via API LemonSqueezy
+├── installer/
+│   └── setup.iss               Script Inno Setup
+├── docs/
+│   └── guide.html              Guide utilisateur intégré
+└── Cargo.toml</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="acl-overview">Mode Rapide — Verrouillage ACL</h2>
+
+<p>
+  Le mode Rapide utilise les mécanismes de contrôle d'accès natifs de Windows (NTFS ACL) pour bloquer l'accès à un fichier ou dossier. Aucune modification du contenu du fichier n'est effectuée — seules les métadonnées de sécurité sont modifiées.
+</p>
+
+<h3 id="acl-flow">Flux de verrouillage</h3>
+
+<h4>Verrouillage</h4>
+<ol style="color: var(--text-secondary); margin-left: 1.25rem; margin-bottom: 1.5rem;">
+  <li style="margin-bottom: 0.5rem;">L'utilisateur saisit et confirme un mot de passe via la popup sécurisée</li>
+  <li style="margin-bottom: 0.5rem;">Le mot de passe est hashé avec <strong>Argon2id</strong> (paramètres : m=64 MiB, t=3, p=4)</li>
+  <li style="margin-bottom: 0.5rem;">Les ACE (Access Control Entries) actuelles sont lues, sérialisées, et stockées dans un fichier compagnon chiffré</li>
+  <li style="margin-bottom: 0.5rem;">Le hash du mot de passe est sauvegardé dans un fichier <code>.securevault.hash</code> séparé</li>
+  <li style="margin-bottom: 0.5rem;">Une DACL restrictive est appliquée, refusant <code>GENERIC_READ | GENERIC_WRITE | GENERIC_EXECUTE | DELETE</code> tout en conservant <code>FILE_READ_ATTRIBUTES</code></li>
+  <li style="margin-bottom: 0.5rem;">L'attribut <code>FILE_ATTRIBUTE_HIDDEN</code> est appliqué (le fichier apparaît en semi-transparent si "Éléments masqués" est activé)</li>
+  <li style="margin-bottom: 0.5rem;">Un fichier compagnon <code>.securevault</code> est créé pour permettre le double-clic de déverrouillage</li>
+</ol>
+
+<h4>Déverrouillage</h4>
+<ol style="color: var(--text-secondary); margin-left: 1.25rem; margin-bottom: 1.5rem;">
+  <li style="margin-bottom: 0.5rem;">Le mot de passe est vérifié contre le hash stocké dans <code>.securevault.hash</code> — <strong>sans aucune manipulation de DACL</strong></li>
+  <li style="margin-bottom: 0.5rem;">Si correct : les ACE originales sont déchiffrées et restaurées</li>
+  <li style="margin-bottom: 0.5rem;">L'attribut masqué est retiré</li>
+  <li style="margin-bottom: 0.5rem;">Les fichiers compagnons (<code>.securevault</code> et <code>.securevault.hash</code>) sont supprimés</li>
+</ol>
+
+<div class="callout callout-info">
+  <p><strong>Vérification du mot de passe.</strong> La vérification du mot de passe se fait en temps constant via <code>argon2::verify_password</code>, ce qui prévient les attaques par canal auxiliaire (timing attacks). Le hash est vérifié avant toute modification de permission — un mot de passe incorrect ne provoque aucun changement sur le fichier.</p>
+</div>
+
+<h3 id="acl-limits">Limites du mode Rapide</h3>
+
+<p>
+  Le mode Rapide est une <strong>défense dissuasive</strong>, pas une protection cryptographique. Un administrateur Windows peut reprendre possession d'un fichier via <code>takeown</code> et <code>icacls /reset</code>. C'est par conception : le déverrouillage forcé dans le Centre d'administration utilise exactement ce mécanisme, protégé par le Master Password.
+</p>
+<p>
+  Pour une protection résistant à un accès physique ou administrateur, utilisez le mode Fort.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="crypto-overview">Mode Fort — Chiffrement AES-256-GCM</h2>
+
+<p>
+  Le mode Fort fournit une protection cryptographique complète. Chaque fichier ou dossier est chiffré avec une clé unique dérivée du mot de passe de l'utilisateur. Le résultat est un fichier <code>.vault</code> autonome et opaque.
+</p>
+
+<h3 id="kdf">Dérivation de clé — Argon2id</h3>
+
+<p>
+  Le mot de passe de l'utilisateur n'est jamais utilisé directement comme clé de chiffrement. Il est transformé en une clé de 256 bits via <strong>Argon2id</strong>, le vainqueur du Password Hashing Competition (2015) et la recommandation actuelle de l'OWASP.
+</p>
+
+<table>
+  <thead>
+    <tr><th>Paramètre</th><th>Valeur</th><th>Signification</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Algorithme</td><td>Argon2id</td><td>Hybride résistant GPU et canal auxiliaire</td></tr>
+    <tr><td>Mémoire (m)</td><td>65 536 KiB (64 MiB)</td><td>Chaque tentative de brute-force coûte 64 Mo de RAM</td></tr>
+    <tr><td>Itérations (t)</td><td>3</td><td>3 passes sur la mémoire</td></tr>
+    <tr><td>Parallélisme (p)</td><td>4</td><td>4 threads par dérivation</td></tr>
+    <tr><td>Sel</td><td>32 octets aléatoires</td><td>Unique par fichier, généré par <code>OsRng</code></td></tr>
+    <tr><td>Sortie</td><td>256 bits (32 octets)</td><td>Clé AES-256</td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout-info">
+  <p><strong>Résistance au brute-force.</strong> Avec ces paramètres, une seule tentative de dérivation prend environ 150 ms sur un processeur moderne et consomme 64 Mo de RAM. Un attaquant testant 1 million de mots de passe devrait mobiliser 64 To de RAM ou attendre environ 42 heures sur un seul cœur. Les paramètres sont largement au-dessus des minimums recommandés par l'OWASP (m=19 456, t=2).</p>
+</div>
+
+<h3>Chiffrement — AES-256-GCM</h3>
+
+<p>
+  AES-256-GCM (Galois/Counter Mode) est un algorithme de chiffrement <strong>authentifié</strong> : il assure à la fois la confidentialité et l'intégrité des données. Toute altération du fichier <code>.vault</code> (même d'un seul bit) sera détectée au déchiffrement.
+</p>
+
+<table>
+  <thead>
+    <tr><th>Propriété</th><th>Détail</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Algorithme</td><td>AES-256-GCM (NIST SP 800-38D)</td></tr>
+    <tr><td>Taille de clé</td><td>256 bits</td></tr>
+    <tr><td>Nonce</td><td>96 bits (12 octets), aléatoire par <code>OsRng</code></td></tr>
+    <tr><td>Tag d'authentification</td><td>128 bits (16 octets)</td></tr>
+    <tr><td>Accélération matérielle</td><td>AES-NI (présent sur tous les processeurs x86 depuis 2010)</td></tr>
+  </tbody>
+</table>
+
+<h3>Chiffrement de dossiers</h3>
+
+<p>
+  Les dossiers sont empaquetés en archive <strong>tar</strong> en mémoire avant chiffrement, produisant un unique fichier <code>.vault</code>. Cette approche est plus sûre que le chiffrement fichier par fichier car elle masque la structure du dossier, les noms de fichiers, le nombre de fichiers, et les tailles individuelles. Seul le poids total est observable.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="vault-format">Format de fichier .vault</h2>
+
+<div class="diagram">Offset  Taille   Contenu
+──────  ──────   ───────────────────────────────
+0       4 B      Magic bytes : "SVLT" (identifiant)
+4       1 B      Version du format : 0x02
+5       32 B     Sel Argon2id (aléatoire, unique par fichier)
+37      12 B     Nonce #1 (pour FEK chiffrée par mot de passe)
+49      60 B     FEK chiffrée par mot de passe (AES-GCM, 44 B + 16 B tag)
+109     12 B     Nonce #2 (pour FEK chiffrée par recovery key)
+121     60 B     FEK chiffrée par recovery key (AES-GCM, 44 B + 16 B tag)
+181     12 B     Nonce données (pour le chiffrement du contenu)
+193     2 B      Longueur du nom original (u16 little-endian)
+195     N B      Nom du fichier/dossier original (UTF-8)
+                 (se termine par "/" si c'est un dossier)
+195+N   var      Données chiffrées AES-256-GCM
+                 (incluent le tag GCM de 16 B en fin)</div>
+
+<div class="callout callout-success">
+  <p><strong>Double enveloppe (v1.0.1+).</strong> Le format v2 utilise un système de double enveloppe : une clé de chiffrement de fichier (FEK) aléatoire est générée, puis chiffrée indépendamment par le mot de passe ET par la clé de récupération. Cela permet de déchiffrer avec l'un ou l'autre, sans que la recovery key dépende du mot de passe.</p>
+</div>
+
+<div class="callout callout-info">
+  <p><strong>Identification des dossiers.</strong> Si le nom stocké dans l'en-tête se termine par <code>/</code>, le contenu chiffré est une archive tar. Au déchiffrement, SecureVault détecte ce marqueur et extrait l'archive pour recréer la structure de dossier complète.</p>
+</div>
+
+<h3 id="recovery">Clés de récupération</h3>
+
+<p>
+  À chaque chiffrement, une <strong>clé de récupération</strong> aléatoire de 256 bits est générée. Grâce au système de double enveloppe (v2), la FEK est chiffrée indépendamment par le mot de passe et par la recovery key. Cela signifie que la recovery key peut déchiffrer le fichier <strong>sans connaître le mot de passe</strong>. Elle est affichée une seule fois à l'utilisateur lors du chiffrement.
+</p>
+
+<p>
+  Les recovery keys sont également conservées dans le registre local (<code>vault_registry.json</code>), <strong>chiffrées avec le Master Password</strong> via AES-256-GCM. Sans le Master Password, elles sont illisibles. L'export des recovery keys (fichier texte imprimable) nécessite la saisie du Master Password.
+</p>
+
+<div class="callout callout-danger">
+  <p><strong>Perte du mot de passe.</strong> Si vous perdez à la fois le mot de passe de chiffrement ET la clé de récupération, vos données sont <strong>définitivement perdues</strong>. C'est une propriété fondamentale du chiffrement fort, pas une limitation de SecureVault. Imprimez vos clés de récupération et conservez-les en lieu sûr.</p>
+</div>
+
+<h3 id="secure-delete">Suppression sécurisée</h3>
+
+<p>
+  Après chiffrement, l'original peut être supprimé de façon sécurisée (sur confirmation de l'utilisateur). Le processus consiste en trois passes d'écrasement : une passe de zéros (<code>0x00</code>), une passe de uns (<code>0xFF</code>), et une passe de données aléatoires. Un <code>flush</code> force l'écriture sur disque avant la suppression du fichier.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="ui">Interface utilisateur</h2>
+
+<p>
+  L'interface est entièrement en <strong>Win32 natif</strong> — aucun framework GUI, aucune dépendance Electron ou WebView. Chaque pixel est peint via les API GDI/GDI+ de Windows. Cela garantit un exécutable compact (&lt; 10 Mo), un démarrage instantané, et une consommation mémoire minimale.
+</p>
+
+<h3>Sécurité de la saisie du mot de passe</h3>
+
+<p>
+  Les mots de passe en mémoire sont encapsulés dans <code>Zeroizing&lt;String&gt;</code> (crate <code>zeroize</code>). Quand la variable sort du scope, la mémoire est écrasée par des zéros avant d'être libérée. Les clés dérivées suivent le même traitement via <code>Zeroizing&lt;[u8; 32]&gt;</code>. Cette protection s'applique sur tous les chemins de code, y compris les chemins d'erreur.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="dashboard">Centre d'administration</h2>
+
+<p>
+  Le dashboard est une fenêtre Win32 native avec trois onglets : Fichiers protégés (liste, actions, statistiques), Paramètres (rappel de sécurité, thème, langue), et À propos (version, licence, liens).
+</p>
+
+<h3>Données locales</h3>
+
+<p>Tous les fichiers de données sont stockés dans <code>%LOCALAPPDATA%\SecureVault\</code> :</p>
+
+<table>
+  <thead>
+    <tr><th>Fichier</th><th>Contenu</th><th>Sensible ?</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>vault_registry.json</code></td><td>Liste des fichiers protégés, statuts, chemins, recovery keys chiffrées</td><td>Recovery keys chiffrées par Master Password</td></tr>
+    <tr><td><code>config.json</code></td><td>Préférences (langue, thème, rappel)</td><td>Non</td></tr>
+    <tr><td><code>master.key</code></td><td>Hash Argon2id du Master Password</td><td>Hash uniquement (pas le mot de passe)</td></tr>
+    <tr><td><code>license.json</code></td><td>Clé de licence, instance_id et statut d'activation</td><td>Vérifié via empreinte machine</td></tr>
+    <tr><td><code>usage.json</code></td><td>Compteurs d'utilisation (version gratuite)</td><td>Non</td></tr>
+  </tbody>
+</table>
+
+<h3>Master Password et déverrouillage forcé</h3>
+
+<p>
+  Le Master Password est un mot de passe administrateur global, créé au premier lancement (onboarding). Il permet le <strong>déverrouillage forcé</strong> des fichiers en mode Rapide (ACL) — en cas d'oubli du mot de passe individuel ou de verrouillage par un tiers.
+</p>
+
+<p>
+  Le déverrouillage forcé est <strong>impossible</strong> pour les fichiers en mode Fort (chiffrement). Seul le mot de passe de chiffrement ou la recovery key peuvent déchiffrer les données. C'est précisément la différence entre les deux modes.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="batch">Multi-fichiers</h2>
+
+<p>
+  Quand l'utilisateur sélectionne plusieurs fichiers dans l'Explorateur et fait clic droit → SecureVault, Windows lance une instance de l'exécutable par fichier. SecureVault coordonne ces instances via un mutex nommé et un fichier de file d'attente.
+</p>
+
+<p>
+  La première instance devient le "leader" : elle collecte tous les chemins des instances suivantes, affiche une seule popup de mot de passe, et traite tous les fichiers avec le même mot de passe. Les instances suivantes enregistrent leur chemin et se terminent silencieusement. Le résultat est un résumé unique indiquant le nombre de succès et d'échecs.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="licensing">Système de licence</h2>
+
+<p>
+  SecureVault utilise un système de licence géré par <strong>LemonSqueezy</strong>. Après l'achat, une clé de licence est automatiquement générée et envoyée par email. L'activation nécessite une connexion internet <strong>unique</strong> — après activation, la licence est vérifiée localement.
+</p>
+
+<table>
+  <thead>
+    <tr><th>Aspect</th><th>Détail</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Plateforme</td><td>LemonSqueezy (génération et gestion des clés)</td></tr>
+    <tr><td>Activation</td><td>API REST (<code>POST /v1/licenses/activate</code>), une seule fois</td></tr>
+    <tr><td>Liaison machine</td><td>Empreinte matérielle (volume serial + nom PC + SID utilisateur, hashé)</td></tr>
+    <tr><td>Vérification post-activation</td><td>Locale, basée sur <code>license.json</code> (clé + instance_id)</td></tr>
+    <tr><td>Format de clé</td><td>UUID généré par LemonSqueezy</td></tr>
+    <tr><td>Données transmises</td><td>Clé de licence + empreinte machine uniquement — aucune donnée personnelle</td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout-info">
+  <p><strong>Achat et activation automatiques.</strong> L'achat se fait via la page LemonSqueezy. La clé de licence est envoyée par email immédiatement après le paiement. Dans SecureVault, l'utilisateur colle sa clé dans la popup d'activation — le logiciel contacte l'API LemonSqueezy une seule fois pour activer et lier la licence à la machine. Après cela, plus aucune connexion internet n'est requise.</p>
+</div>
+
+<div class="callout callout-warning">
+  <p><strong>Une licence = un poste.</strong> Chaque licence est liée à l'empreinte matérielle d'un seul ordinateur. Pour changer de machine, désactivez la licence sur l'ancien poste (via le Centre d'administration) puis réactivez-la sur le nouveau.</p>
+</div>
+
+<h3>Version gratuite — Limites</h3>
+<table>
+  <thead>
+    <tr><th>Fonctionnalité</th><th>Gratuit</th><th>Pro</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Verrouillages (mode Rapide)</td><td>20</td><td>Illimité</td></tr>
+    <tr><td>Chiffrements (mode Fort)</td><td>3</td><td>Illimité</td></tr>
+    <tr><td>Déverrouillage et déchiffrement</td><td>Illimité</td><td>Illimité</td></tr>
+    <tr><td>Centre d'administration</td><td>Oui</td><td>Oui</td></tr>
+    <tr><td>Notifications de sécurité</td><td>Non</td><td>Oui</td></tr>
+    <tr><td>Déverrouillage forcé</td><td>Non</td><td>Oui</td></tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="install">Installation</h2>
+
+<h3>Installation standard</h3>
+<p>
+  Lancez <code>SecureVault_Setup.exe</code>. L'installeur copie le binaire dans <code>C:\Program Files\SecureVault\</code>, crée les entrées du menu contextuel (registre HKCU), associe le type de fichier <code>.securevault</code>, et crée le raccourci dans le menu Démarrer. Aucun droit administrateur n'est requis pour l'installation.
+</p>
+
+<h3>Désinstallation</h3>
+<p>
+  Via "Programmes et fonctionnalités" dans Windows, ou en relançant l'installeur. La désinstallation supprime le binaire, les entrées du registre, le raccourci, et le type de fichier associé. Les données locales (<code>%LOCALAPPDATA%\SecureVault\</code>) ne sont <strong>pas supprimées</strong> automatiquement, pour éviter toute perte de recovery keys.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="faq-tech">FAQ technique</h2>
+
+<h3>Pourquoi AES-256-GCM et pas ChaCha20-Poly1305 ?</h3>
+<p>
+  AES-256-GCM est accéléré matériellement sur tous les processeurs x86 modernes via les instructions AES-NI (présentes depuis Intel Westmere en 2010 et AMD Bulldozer en 2011). Sur ces processeurs, AES-GCM est plus rapide que ChaCha20. ChaCha20 serait pertinent sur des appareils ARM sans accélération AES, ce qui n'est pas le cas d'usage de SecureVault (Windows x86_64).
+</p>
+
+<h3>Pourquoi Rust et pas C# ou Python ?</h3>
+<p>
+  Rust produit un binaire natif compact (&lt; 10 Mo), sans runtime ni garbage collector. La sécurité mémoire de Rust (ownership, borrowing) élimine les classes de vulnérabilités les plus courantes : buffer overflow, use-after-free, double-free. Pour un outil de sécurité manipulant des secrets en mémoire, c'est un avantage structurel.
+</p>
+
+<h3>Le fichier .vault est-il compatible entre versions ?</h3>
+<p>
+  Oui. Le champ "version" dans l'en-tête garantit la compatibilité ascendante. Un fichier créé en v1.0 restera lisible par toutes les versions futures. Le format ne sera jamais modifié de façon incompatible sans un nouveau numéro de version.
+</p>
+
+<h3>Que se passe-t-il en cas de coupure de courant pendant le chiffrement ?</h3>
+<p>
+  Le fichier <code>.vault</code> est entièrement écrit avant que l'original ne soit supprimé. En cas d'interruption, les deux fichiers coexistent : l'original intact et un <code>.vault</code> potentiellement incomplet (qui sera détecté comme corrompu au déchiffrement). Aucune perte de données.
+</p>
+
+<h3>SecureVault envoie-t-il des données quelque part ?</h3>
+<p>
+  La seule communication réseau est l'activation de la licence Pro : un appel unique à l'API LemonSqueezy contenant la clé de licence et l'empreinte machine (hash). Aucun fichier, aucune donnée personnelle, aucune télémétrie n'est transmise. Tout le traitement des fichiers (verrouillage, chiffrement, déchiffrement) est strictement local. Vous pouvez le vérifier dans le code source sur GitHub, ou en surveillant le trafic réseau de l'application.
+</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2 id="changelog">Changelog</h2>
+
+<h3>v1.0.3 <span class="badge badge-green">Actuelle</span></h3>
+<p>Migration du système de licence vers <strong>LemonSqueezy</strong>. Les clés de licence sont désormais générées automatiquement après achat et activées en ligne via l'API LemonSqueezy. Liaison machine par empreinte matérielle (hash volume serial + nom PC + SID). Remplacement de <code>ed25519-dalek</code> par <code>ureq</code> pour les appels HTTP. Suppression du keygen local.</p>
+
+<h3>v1.0.2</h3>
+<p>Préparation de la distribution commerciale. Page d'achat LemonSqueezy. Brochure PDF commerciale. Documentation technique complète. Pages CGU et politique de remboursement.</p>
+
+<h3>v1.0.1</h3>
+<p>Refonte du format .vault en <strong>v2 (double enveloppe)</strong>. La FEK (File Encryption Key) est désormais chiffrée indépendamment par le mot de passe et par la recovery key, permettant un déchiffrement par l'un ou l'autre sans dépendance circulaire.</p>
+
+<h3>v1.0.0</h3>
+<p>Système de licence freemium. Popup d'activation intégrée. Barre de statut dans le dashboard. Limites : 20 verrouillages, 3 chiffrements en version gratuite. Déverrouillage et déchiffrement toujours gratuits.</p>
+
+<h3>v0.8.0</h3>
+<p>Modernisation visuelle complète : fade-in des fenêtres, compteurs animés, boutons avec hover smooth, icônes GDI vectorielles anti-aliasées, header custom du dashboard, transitions de slides dans l'onboarding, indicateurs de progression.</p>
+
+<h3>v0.7.0</h3>
+<p>Audit de sécurité complet. Recovery keys chiffrées avec le Master Password. Élimination de la DACL NULL. Zéroïsation de tous les secrets en mémoire. Déduplication du registre. Corrections batch (orphelins, no-op silencieux). i18n complète FR/EN.</p>
+
+<h3>v0.6.0</h3>
+<p>Onboarding 3 slides. Page À propos. Documentation utilisateur intégrée (guide.html). Bouton rafraîchir. Thèmes fonctionnels (rouge/bleu/vert). Internationalisation FR/EN.</p>
+
+<h3>v0.5.0</h3>
+<p>Paramètres persistants. Notifications de sécurité. Multi-fichiers depuis l'Explorateur. Export des recovery keys.</p>
+
+<h3>v0.4.0</h3>
+<p>Raccourci menu Démarrer. Fix "Tout déverrouiller". Sélection multiple dans le dashboard. Activation dynamique des boutons.</p>
+
+<h3>v0.3.0</h3>
+<p>Centre d'administration (dashboard). Master Password. Déverrouillage forcé admin. Registre des opérations (vault_registry.json).</p>
+
+<h3>v0.2.0</h3>
+<p>Chiffrement de dossiers entiers (tar + AES-256-GCM). Suppression sécurisée de dossiers. Verrouillage sans UAC.</p>
+
+<h3>v0.1.0</h3>
+<p>Version initiale. Mode Rapide (ACL). Mode Fort (AES-256-GCM fichiers). Popup mot de passe. Menu contextuel. Installeur Inno Setup.</p>
+
+<div class="doc-footer">
+  <span>© 2026 SecureVault — Tous droits réservés</span>
+  <span>Documentation v1.0.3 — Dernière mise à jour : septembre 2026</span>
+</div>
+
+</main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const sections = document.querySelectorAll('h2[id], h3[id]');
+const links = document.querySelectorAll('.sidebar a[href^="#"]');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-80px 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
