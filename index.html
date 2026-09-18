@@ -624,6 +624,7 @@ section { padding: 6rem 2rem; }
   .steps::before { display: none; }
   .pricing-grid { grid-template-columns: 1fr; }
   .faq-grid { grid-template-columns: 1fr; }
+  .docs-section [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
 
   .compare-table { font-size: 0.8rem; }
   .compare-table thead th,
@@ -663,7 +664,7 @@ section { padding: 6rem 2rem; }
     <a href="#how">Comment ça marche</a>
     <a href="#pricing">Tarifs</a>
     <a href="#faq">FAQ</a>
-    <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.2.exe" class="nav-cta">Télécharger</a>
+    <a href="#download" class="nav-cta">Télécharger</a>
   </div>
 </nav>
 
@@ -683,7 +684,7 @@ section { padding: 6rem 2rem; }
         SecureVault ajoute un menu de sécurité directement dans votre clic droit Windows. Verrouillez l'accès à vos fichiers en un instant ou chiffrez-les avec un algorithme de grade militaire.
       </p>
       <div class="hero-actions">
-        <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.2.exe" class="btn btn-primary">
+        <a href="#download" class="btn btn-primary">
           Télécharger gratuitement
         </a>
         <a href="#modes" class="btn btn-secondary">
@@ -908,7 +909,7 @@ section { padding: 6rem 2rem; }
           <li><span class="check">✓</span> Déverrouillage et déchiffrement illimités</li>
           <li><span class="check">✓</span> Centre d'administration</li>
         </ul>
-        <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.2.exe" class="btn btn-secondary">Télécharger</a>
+        <a href="#download" class="btn btn-secondary">Télécharger</a>
       </div>
       <div class="pricing-card featured reveal">
         <div class="pricing-name">Pro</div>
@@ -924,7 +925,7 @@ section { padding: 6rem 2rem; }
           <li><span class="check">✓</span> Thèmes personnalisables</li>
           <li><span class="check">✓</span> Mises à jour gratuites à vie</li>
         </ul>
-        <a href="https://securevault-app.lemonsqueezy.com/buy" class="btn btn-primary">Obtenir SecureVault Pro</a>
+        <a href="https://securevault-app.lemonsqueezy.com/checkout/buy/c1714f78-610d-4254-9a46-ec328f2f28b2" class="btn btn-primary" target="_blank" rel="noopener">Obtenir SecureVault Pro</a>
       </div>
     </div>
   </div>
@@ -949,7 +950,7 @@ section { padding: 6rem 2rem; }
       </div>
       <div class="faq-item reveal">
         <h3>Mes fichiers sont-ils envoyés sur internet ?</h3>
-        <p>Jamais. Tout le traitement se fait localement sur votre machine. SecureVault ne communique avec aucun serveur. Vos données ne quittent jamais votre ordinateur.</p>
+        <p>Jamais. Tout le traitement (verrouillage, chiffrement, déchiffrement) se fait localement sur votre machine. Vos données ne quittent jamais votre ordinateur. La seule connexion internet est une activation unique de la licence Pro — aucune donnée personnelle ou fichier n'est transmis.</p>
       </div>
       <div class="faq-item reveal">
         <h3>Est-ce compatible avec mon antivirus ?</h3>
@@ -957,8 +958,30 @@ section { padding: 6rem 2rem; }
       </div>
       <div class="faq-item reveal">
         <h3>La licence fonctionne-t-elle sur plusieurs PC ?</h3>
-        <p>Chaque licence Pro est liée à un seul poste. Si vous changez d'ordinateur, supprimez le fichier de licence sur l'ancien et réactivez la même clé sur le nouveau — aucun contact support nécessaire.</p>
+        <p>Chaque licence Pro est liée à un seul poste. Si vous changez d'ordinateur, désactivez la licence sur l'ancien et réactivez la même clé sur le nouveau — aucun contact support nécessaire. Les clés de licence sont générées et gérées automatiquement par LemonSqueezy.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCS -->
+<section class="docs-section" id="docs" style="background: var(--bg-deep); padding: 5rem 2rem;">
+  <div class="container">
+    <h2 class="reveal" style="font-size: 2.2rem; font-weight: 800; text-align: center; margin-bottom: 1rem; letter-spacing: -0.02em;">Aller plus loin</h2>
+    <p class="reveal" style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem; font-size: 1.05rem;">Tout ce qu'il faut savoir sur SecureVault, en toute transparence.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 820px; margin: 0 auto;">
+      <a href="documentation-technique.html" class="reveal" style="display: block; padding: 2rem; background: var(--bg-raised); border: 1px solid var(--border-mid); border-radius: 14px; text-decoration: none; transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.boxShadow='0 8px 40px rgba(192,57,43,0.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--border-mid)';this.style.boxShadow='none';this.style.transform='none'">
+        <div style="font-size: 1.8rem; margin-bottom: 1rem;">📖</div>
+        <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Documentation technique</div>
+        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Architecture détaillée, algorithmes cryptographiques, modèle de menace, format de fichier .vault, et FAQ technique complète.</div>
+        <div style="margin-top: 1rem; font-size: 0.85rem; font-weight: 600; color: #e74c3c;">Lire la documentation →</div>
+      </a>
+      <a href="SecureVault_Brochure_Commerciale.pdf" class="reveal" style="display: block; padding: 2rem; background: var(--bg-raised); border: 1px solid var(--border-mid); border-radius: 14px; text-decoration: none; transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.boxShadow='0 8px 40px rgba(192,57,43,0.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--border-mid)';this.style.boxShadow='none';this.style.transform='none'">
+        <div style="font-size: 1.8rem; margin-bottom: 1rem;">📄</div>
+        <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Brochure commerciale</div>
+        <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Présentation complète du produit en PDF : fonctionnalités, comparatif, tarification. Idéal à transmettre à un décideur.</div>
+        <div style="margin-top: 1rem; font-size: 0.85rem; font-weight: 600; color: #e74c3c;">Télécharger le PDF →</div>
+      </a>
     </div>
   </div>
 </section>
@@ -968,7 +991,7 @@ section { padding: 6rem 2rem; }
   <div class="container">
     <h2 class="reveal">Protégez vos fichiers maintenant</h2>
     <p class="reveal">Téléchargement gratuit, installation en 30 secondes, aucune carte bancaire requise.</p>
-    <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.2.exe" class="btn btn-primary reveal" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+    <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.3.exe" class="btn btn-primary reveal" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
       Télécharger SecureVault pour Windows
     </a>
     <p class="reveal" style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); position: relative;">Windows 10/11 · < 10 Mo · Installation en 30 secondes</p>
@@ -978,12 +1001,13 @@ section { padding: 6rem 2rem; }
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-content">
-    <div class="footer-left">© 2026 SecureVault</div>
+    <div class="footer-left">© 2026 SecureVault · <a href="mailto:securevault-pro@proton.me" style="color: var(--text-muted); text-decoration: none;">securevault-pro@proton.me</a></div>
     <div class="footer-links">
+      <a href="documentation-technique.html">Documentation</a>
+      <a href="SecureVault_Brochure_Commerciale.pdf">Brochure PDF</a>
       <a href="https://securevault33.github.io/shield/terms.html">CGU</a>
       <a href="https://securevault33.github.io/shield/refund.html">Remboursement</a>
       <a href="https://github.com/SecureVault33/shield">GitHub</a>
-      <a href="mailto:securevault-pro@proton.me">Contact</a>
     </div>
   </div>
 </footer>
