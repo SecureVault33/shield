@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecureVault — Guide d'utilisation</title>
+<style>
+  :root {
+    --bg: #1a1a1a;
+    --bg-card: #2d2d2d;
+    --text: #f0f0f0;
+    --text-dim: #a0a0a0;
+    --accent: #e74c3c;
+    --accent-dark: #c0392b;
+    --link: #3498db;
+    --border: #3d3d3d;
+    --warning: #e67e22;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 40px 20px 80px;
+  }
+
+  .wrap {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid var(--accent-dark);
+  }
+
+  header .icon { font-size: 56px; }
+
+  header h1 {
+    color: var(--accent);
+    font-size: 32px;
+    margin: 10px 0 6px;
+  }
+
+  header p {
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  nav.toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+
+  nav.toc h2 {
+    margin-top: 0;
+    font-size: 16px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  nav.toc ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  nav.toc a { color: var(--link); text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+
+  h2 {
+    color: var(--accent);
+    border-left: 4px solid var(--accent-dark);
+    padding-left: 14px;
+    margin-top: 56px;
+    font-size: 24px;
+  }
+
+  h3 {
+    color: var(--text);
+    margin-top: 28px;
+    font-size: 18px;
+  }
+
+  a { color: var(--link); }
+
+  code, pre {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+  }
+
+  code {
+    padding: 2px 6px;
+    font-size: 0.92em;
+  }
+
+  pre {
+    padding: 16px 18px;
+    overflow-x: auto;
+    white-space: pre;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-left: 4px solid var(--link);
+    background: #1e2b33;
+  }
+
+  .callout.warning {
+    border-left-color: var(--warning);
+    background: #2e2416;
+  }
+
+  .callout.danger {
+    border-left-color: var(--accent);
+    background: #2e1a17;
+  }
+
+  .callout strong { display: block; margin-bottom: 6px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  th, td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--bg-card);
+    color: var(--accent);
+  }
+
+  .modes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+  }
+
+  .mode-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .mode-card h3 { margin-top: 0; }
+  .mode-card.fast h3 { color: #3498db; }
+  .mode-card.strong h3 { color: var(--accent); }
+
+  .faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .faq-item .q {
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .faq-item .q::before { content: "❓ "; }
+
+  footer {
+    margin-top: 70px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  ul, ol { padding-left: 24px; }
+  li { margin-bottom: 6px; }
+
+  @media (max-width: 640px) {
+    .modes { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="icon">🛡️</div>
+    <h1>SecureVault</h1>
+    <p>Guide d'utilisation</p>
+  </header>
+
+  <nav class="toc">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#installation">Installation</a></li>
+      <li><a href="#utilisation">Utilisation quotidienne</a></li>
+      <li><a href="#dashboard">Centre d'administration (Dashboard)</a></li>
+      <li><a href="#securite">Sécurité — Ce qu'il faut savoir</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="introduction">1. Introduction</h2>
+  <p>
+    <strong>SecureVault</strong> est un outil léger pour Windows qui protège vos fichiers et
+    dossiers directement depuis le menu contextuel de l'Explorateur — un clic droit suffit
+    pour verrouiller ou chiffrer n'importe quel élément, sans quitter votre flux de travail.
+  </p>
+
+  <div class="modes">
+    <div class="mode-card fast">
+      <h3>🔒 Mode Rapide</h3>
+      <p>Bloque l'accès à un fichier ou dossier en modifiant ses permissions Windows (NTFS).
+      C'est instantané et pratique pour un usage quotidien — masquer un dossier des regards
+      indiscrets sur votre propre ordinateur.</p>
+    </div>
+    <div class="mode-card strong">
+      <h3>🛡️ Mode Fort</h3>
+      <p>Chiffre réellement le contenu avec l'algorithme AES-256-GCM. Le fichier original est
+      remplacé par une version chiffrée illisible sans le mot de passe. C'est la protection à
+      utiliser pour vos données réellement sensibles.</p>
+    </div>
+  </div>
+
+  <h2 id="installation">2. Installation</h2>
+
+  <h3>Lancer l'installeur</h3>
+  <p>
+    Double-cliquez sur <code>SecureVault_Setup.exe</code> et suivez l'assistant. L'installation
+    ajoute automatiquement le sous-menu SecureVault au clic droit de l'Explorateur ainsi qu'un
+    raccourci dans le menu Démarrer.
+  </p>
+
+  <h3>Le Master Password</h3>
+  <p>
+    Au premier lancement, SecureVault vous demande de créer un <strong>Master Password</strong>.
+    Ce mot de passe unique n'a qu'un seul rôle : permettre le <strong>déverrouillage forcé</strong>
+    d'un fichier en Mode Rapide si vous perdez son mot de passe individuel ou si le fichier
+    devient inaccessible.
+  </p>
+  <div class="callout warning">
+    <strong>À retenir</strong>
+    Choisissez un Master Password fort et mémorisable — il n'est jamais affiché après sa
+    création. Il ne déchiffre <em>pas</em> les fichiers en Mode Fort (voir la section Sécurité).
+  </div>
+
+  <h2 id="utilisation">3. Utilisation quotidienne</h2>
+
+  <p>Toutes les actions se font depuis le clic droit de l'Explorateur Windows :</p>
+
+  <pre>📁 Mon dossier confidentiel
+   └── Clic droit
+        └── 🛡️ SecureVault ▸
+             ├── 🔒 Verrouiller (Rapide)
+             ├── 🔓 Déverrouiller
+             ├── 🛡️ Chiffrer (Fort)
+             ├── 🔑 Déchiffrer
+             └── 📊 Centre d'administration</pre>
+
+  <h3>Verrouiller un fichier ou dossier</h3>
+  <ol>
+    <li>Clic droit sur l'élément → <strong>SecureVault → Verrouiller (Rapide)</strong></li>
+    <li>Choisissez un mot de passe pour cet élément</li>
+    <li>L'élément devient inaccessible et un fichier compagnon <code>.securevault</code>
+    apparaît à côté</li>
+  </ol>
+
+  <h3>Déverrouiller</h3>
+  <p>
+    Deux façons : clic droit → <strong>SecureVault → Déverrouiller</strong>, ou double-clic
+    directement sur le fichier <code>.securevault</code> qui l'accompagne. Le mot de passe
+    utilisé au verrouillage vous sera demandé.
+  </p>
+
+  <h3>Chiffrer un fichier ou dossier</h3>
+  <ol>
+    <li>Clic droit sur l'élément → <strong>SecureVault → Chiffrer (Fort)</strong></li>
+    <li>Choisissez un mot de passe (une barre de force vous guide)</li>
+    <li>Une <strong>recovery key</strong> s'affiche une seule fois — notez-la immédiatement</li>
+    <li>Un fichier <code>.vault</code> est créé ; vous pouvez choisir de supprimer l'original
+    de façon sécurisée (3 passes d'écrasement)</li>
+  </ol>
+
+  <h3>Déchiffrer</h3>
+  <p>
+    Clic droit sur le fichier <code>.vault</code> → <strong>SecureVault → Déchiffrer</strong>,
+    puis entrez le mot de passe utilisé au chiffrement.
+  </p>
+  <div class="callout">
+    <strong>Mot de passe perdu ? Utilisez la recovery key</strong>
+    Pour déchiffrer avec la recovery key, collez-la dans le champ mot de passe.
+    SecureVault la détecte automatiquement. Le mot de passe et la recovery key ouvrent
+    chacun le fichier, indépendamment l'un de l'autre.
+  </div>
+  <div class="callout warning">
+    <strong>Fichiers chiffrés avant la version 1.0.1</strong>
+    Leur recovery key n'est pas utilisable : seul le mot de passe fonctionne. SecureVault le
+    signale au moment du déchiffrement. Déchiffrez-les puis chiffrez-les à nouveau pour
+    obtenir une recovery key réellement utilisable.
+  </div>
+
+  <h2 id="dashboard">4. Centre d'administration (Dashboard)</h2>
+
+  <h3>Y accéder</h3>
+  <p>Trois façons d'ouvrir le dashboard :</p>
+  <ul>
+    <li>Tapez <strong>« SecureVault »</strong> dans la recherche Windows</li>
+    <li>Clic droit n'importe où dans l'Explorateur → <strong>SecureVault → 📊 Centre d'administration</strong></li>
+    <li>Lancez <code>securevault.exe</code> sans argument, ou avec <code>dashboard</code></li>
+  </ul>
+
+  <h3>La liste des fichiers protégés</h3>
+  <p>
+    L'onglet <strong>📋 Fichiers protégés</strong> liste tout ce que SecureVault a verrouillé ou
+    chiffré, avec son mode, sa date et son statut. Sélectionnez une ou plusieurs lignes pour
+    déverrouiller, déchiffrer ou retirer des entrées de la liste.
+  </p>
+
+  <h3>Le déverrouillage forcé</h3>
+  <p>
+    Réservé aux situations d'urgence en <strong>Mode Rapide uniquement</strong> (mot de passe
+    perdu, fichier bloqué) : la zone orange <em>« Déverrouillage forcé »</em> demande votre
+    Master Password puis reprend les permissions du fichier, avec élévation administrateur si
+    nécessaire.
+  </p>
+  <div class="callout danger">
+    <strong>Ne fonctionne pas en Mode Fort</strong>
+    Le déverrouillage forcé ne peut rien pour un fichier chiffré : sans le mot de passe ou la
+    recovery key, les données restent définitivement illisibles — c'est voulu.
+  </div>
+
+  <h3>Les paramètres</h3>
+  <p>
+    L'onglet <strong>⚙️ Paramètres</strong> permet d'ajuster le rappel de sécurité, de changer
+    votre Master Password, de choisir le thème et de définir le dossier d'export
+    des recovery keys.
+  </p>
+  <p>
+    Changer le Master Password re-chiffre automatiquement toutes vos recovery keys enregistrées.
+    Le changement de thème relance le Centre d'administration pour s'appliquer.
+  </p>
+
+  <h3>L'export des recovery keys</h3>
+  <p>
+    Le bouton <strong>📥 Exporter les recovery keys</strong> génère un fichier texte récapitulant
+    toutes vos clés de récupération enregistrées, après vérification du Master Password.
+    Imprimez ce fichier et conservez-le en lieu sûr, puis supprimez la copie numérique.
+  </p>
+
+  <h2 id="securite">5. Sécurité — Ce qu'il faut savoir</h2>
+
+  <table>
+    <tr><th>Mode</th><th>Protège contre</th><th>Ne protège pas contre</th></tr>
+    <tr>
+      <td>🔒 Rapide</td>
+      <td>L'accès accidentel ou occasionnel (partage d'ordinateur, curiosité)</td>
+      <td>Un attaquant déterminé ayant un accès administrateur à la machine</td>
+    </tr>
+    <tr>
+      <td>🛡️ Fort</td>
+      <td>Tout accès non autorisé — protection cryptographique complète</td>
+      <td>La perte du mot de passe <em>et</em> de la recovery key (données perdues à jamais)</td>
+    </tr>
+  </table>
+
+  <div class="callout warning">
+    <strong>Le Master Password ne déverrouille pas les fichiers chiffrés</strong>
+    Il ne sert qu'au déverrouillage forcé en Mode Rapide. En Mode Fort, seuls le mot de passe
+    du fichier ou sa recovery key permettent de récupérer les données.
+  </div>
+
+  <h3>Les limites, en toutes lettres</h3>
+  <div class="callout warning">
+    <strong>Le Mode Rapide est une barrière, pas un coffre-fort</strong>
+    Il protège contre l'accès accidentel. Un administrateur déterminé peut reprendre possession
+    des fichiers via le déverrouillage forcé — c'est d'ailleurs exactement ce que fait
+    SecureVault lui-même quand vous avez perdu votre mot de passe. Pour une protection
+    cryptographique réelle, utilisez le Mode Fort.
+  </div>
+
+  <div class="callout warning">
+    <strong>La suppression sécurisée n'efface pas tout sur un SSD</strong>
+    Les 3 passes d'écrasement sont efficaces sur les disques durs traditionnels (HDD). Sur les
+    SSD, le <em>wear leveling</em> répartit les écritures sur des cellules physiques différentes :
+    des copies des données d'origine peuvent subsister dans des zones inaccessibles au système.
+    Pour une destruction garantie sur SSD, chiffrez le fichier (Mode Fort) plutôt que de compter
+    sur l'effacement de l'original.
+  </div>
+
+  <div class="callout warning">
+    <strong>Vos recovery keys dépendent de votre Master Password</strong>
+    Depuis la version 0.7.0, les recovery keys enregistrées par SecureVault sont chiffrées sur
+    votre disque avec votre Master Password. Si vous perdez votre Master Password <em>et</em>
+    votre fichier d'export, ces recovery keys sont irrécupérables — et avec elles, le dernier
+    recours pour vos fichiers chiffrés dont vous auriez aussi oublié le mot de passe.
+  </div>
+
+  <h3>Recommandations</h3>
+  <ul>
+    <li>Imprimez vos recovery keys ou stockez-les hors ligne, jamais uniquement dans un fichier numérique</li>
+    <li>Utilisez un mot de passe fort et unique pour chaque fichier chiffré important</li>
+    <li>Gardez votre Master Password mémorisable mais difficile à deviner — il protège l'accès d'urgence à tous vos fichiers en Mode Rapide</li>
+  </ul>
+
+  <h2 id="faq">6. FAQ</h2>
+
+  <div class="faq-item">
+    <div class="q">Version gratuite ou SecureVault Pro ?</div>
+    <p>
+      Cette version gratuite permet 20 verrouillages et 3 chiffrements. Déverrouiller et
+      déchiffrer restent toujours gratuits et illimités. Pour un usage illimité, SecureVault Pro
+      est disponible sur <strong>securevault-app.com</strong> (lien <strong>Passer à Pro →</strong>
+      du Centre d'administration).
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <div class="q">J'ai perdu mon mot de passe, que faire ?</div>
+    <p>
+      <strong>Mode Rapide :</strong> utilisez le déverrouillage forcé depuis le dashboard
+      (Master Password requis). <strong>Mode Fort :</strong> seule la recovery key permet de
+      récupérer le fichier : lancez le déchiffrement et collez-la dans le champ mot de passe.
+      Sans elle, les données sont définitivement perdues. Vous ne l'avez pas notée ? Si vous
+      l'avez enregistrée, retrouvez-la avec <strong>📥 Exporter les recovery keys</strong>
+      (Master Password requis). Attention : pour un fichier chiffré avant la version 1.0.1, la
+      recovery key n'ouvre rien.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <div class="q">Le fichier a disparu après verrouillage, où est-il passé ?</div>
+    <p>
+      Il n'a pas disparu : SecureVault lui applique l'attribut « caché » pour plus de
+      discrétion. Dans l'Explorateur, activez l'affichage des éléments masqués
+      (onglet <em>Affichage</em> → <em>Afficher</em> → <em>Éléments masqués</em>) pour le
+      retrouver, ou déverrouillez-le directement via le fichier <code>.securevault</code>
+      compagnon (qui reste visible, lui).
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <div class="q">Mon antivirus bloque ou signale SecureVault, est-ce normal ?</div>
+    <p>
+      Oui, c'est un faux positif courant : SecureVault modifie les permissions NTFS et les
+      attributs de fichiers, un comportement que certains antivirus surveillent de près par
+      précaution. Ajoutez une exception pour <code>securevault.exe</code> dans votre
+      antivirus si besoin.
+    </p>
+  </div>
+
+  <footer>
+    SecureVault — Sécurisation de fichiers pour Windows<br>
+    Chiffrement AES-256-GCM + Argon2id · Toutes les opérations restent locales
+  </footer>
+
+</div>
+</body>
+</html>
