@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://securevault33.github.io/shield/sitemap.xml
