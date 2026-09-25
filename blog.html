@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog SecureVault — Guides et Tutoriels Sécurité Windows</title>
+    <meta name="description" content="Retrouvez tous nos guides pour protéger, chiffrer et verrouiller vos fichiers et dossiers Windows. Tutoriels pas-à-pas, comparatifs et conseils d'experts.">
+    <meta name="google-site-verification" content="ISv3_cEcw6F74wpUbxIuSGGb1LUwIQ4hOJUrqkES1VI" />
+    <link rel="canonical" href="https://securevault.fr/blog.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Blog SecureVault — Guides et Tutoriels Sécurité Windows" />
+    <meta property="og:description" content="Retrouvez tous nos guides pour protéger, chiffrer et verrouiller vos fichiers et dossiers Windows. Tutoriels pas-à-pas, comparatifs et conseils d'experts." />
+    <meta property="og:url" content="https://securevault.fr/blog.html" />
+    <meta property="og:site_name" content="SecureVault" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Schema.org CollectionPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Blog SecureVault — Guides et Tutoriels Sécurité Windows",
+        "description": "Retrouvez tous nos guides pour protéger, chiffrer et verrouiller vos fichiers et dossiers Windows. Tutoriels pas-à-pas, comparatifs et conseils d'experts.",
+        "url": "https://securevault.fr/blog.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "SecureVault",
+            "url": "https://securevault.fr"
+        }
+    }
+    </script>
+
+    <!-- BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Accueil",
+                "item": "https://securevault.fr/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://securevault.fr/blog.html"
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0d0d0d;
+            --bg-card: #111111;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --accent: #c0392b;
+            --accent-light: #e74c3c;
+            --border-color: #1a1a1a;
+            --radius: 12px;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .nav-logo svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--accent-light);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent);
+            color: #fff !important;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-light);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            text-align: center;
+            padding: 80px 16px 48px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .breadcrumb {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-light);
+        }
+
+        .breadcrumb span {
+            margin: 0 8px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* ===== ARTICLES GRID ===== */
+        .articles-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 56px 16px 80px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .article-card:hover {
+            border-color: #2a2a2a;
+            transform: translateY(-4px);
+        }
+
+        .article-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--accent-light);
+            background: rgba(231, 76, 60, 0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            align-self: flex-start;
+        }
+
+        .article-card h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .article-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .reading-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .reading-time svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--text-secondary);
+        }
+
+        .article-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            transition: color 0.2s;
+        }
+
+        .article-link:hover {
+            color: #fff;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 48px 16px 32px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 32px;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-brand .nav-logo {
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col a {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 32px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(5, 5, 5, 0.97);
+                border-bottom: 1px solid var(--border-color);
+                padding: 16px;
+                gap: 16px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding: 56px 16px 36px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .articles-section {
+                padding: 36px 16px 56px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="https://securevault.fr/" class="nav-logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.83-3.23 9.36-7 10.57-3.77-1.21-7-5.74-7-10.57V6.3l7-3.12z"/><path d="M12 7a2.5 2.5 0 00-1 4.8V15h2v-3.2A2.5 2.5 0 0012 7z"/></svg>
+            SecureVault
+        </a>
+
+        <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </button>
+
+        <ul class="nav-links">
+            <li><a href="https://securevault.fr/">Accueil</a></li>
+            <li><a href="https://securevault.fr/#modes">Fonctionnalités</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="https://securevault.fr/" class="nav-cta">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Télécharger
+            </a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="breadcrumb">
+        <a href="https://securevault.fr/">Accueil</a>
+        <span>›</span>
+        Blog
+    </div>
+    <h1>Blog SecureVault</h1>
+    <p>Guides, tutoriels et conseils pour protéger vos fichiers Windows</p>
+</section>
+
+<!-- ===== ARTICLES GRID ===== -->
+<section class="articles-section">
+    <div class="articles-grid">
+
+        <!-- Article 1 -->
+        <article class="article-card">
+            <span class="article-tag">Guide Sécurité</span>
+            <h2>Comment Chiffrer un Fichier sur Windows en 2026</h2>
+            <p>Guide complet avec 3 méthodes : SecureVault, BitLocker/EFS et VeraCrypt. Comparatif et FAQ.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    10 min
+                </span>
+                <a href="comment-chiffrer-fichier-windows.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="article-card">
+            <span class="article-tag">Guide Pratique</span>
+            <h2>Protéger un Dossier par Mot de Passe sur Windows</h2>
+            <p>Les meilleures solutions pour verrouiller un dossier Windows avec un mot de passe.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    9 min
+                </span>
+                <a href="proteger-dossier-mot-de-passe-windows.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="article-card">
+            <span class="article-tag">Comparatif</span>
+            <h2>Comparatif : Meilleur Logiciel de Chiffrement Windows 2026</h2>
+            <p>VeraCrypt, BitLocker, AxCrypt, SecureVault : quel outil choisir ? Test et avis.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    12 min
+                </span>
+                <a href="comparatif-logiciel-chiffrement-windows.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 4 -->
+        <article class="article-card">
+            <span class="article-tag">Guide Pratique</span>
+            <h2>Protéger un Dossier sur Windows Famille sans BitLocker</h2>
+            <p>Pas de BitLocker sur Windows Home ? Voici les alternatives gratuites pour protéger vos dossiers.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    8 min
+                </span>
+                <a href="proteger-dossier-windows-famille-sans-bitlocker.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 5 -->
+        <article class="article-card">
+            <span class="article-tag">Tutoriel</span>
+            <h2>Verrouiller un Fichier Windows en un Clic Droit</h2>
+            <p>La méthode la plus rapide pour protéger un fichier sous Windows, directement depuis l'Explorateur.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    6 min
+                </span>
+                <a href="verrouiller-fichier-windows-clic-droit.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 6 -->
+        <article class="article-card">
+            <span class="article-tag">Guide Pratique</span>
+            <h2>Comment Cacher un Dossier sur Windows 11</h2>
+            <p>3 méthodes pour rendre un dossier invisible : attributs, PowerShell et logiciels tiers.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    7 min
+                </span>
+                <a href="cacher-dossier-windows-11.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 7 -->
+        <article class="article-card">
+            <span class="article-tag">Guide Sécurité</span>
+            <h2>Comment Chiffrer une Clé USB sur Windows Gratuitement</h2>
+            <p>Protégez vos données sur clé USB ou disque externe avec le chiffrement. Guide étape par étape.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    8 min
+                </span>
+                <a href="chiffrer-cle-usb-windows.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 8 -->
+        <article class="article-card">
+            <span class="article-tag">Cas Pratique</span>
+            <h2>Protéger ses Fichiers sur un Ordinateur Partagé</h2>
+            <p>Famille, colocation, bureau partagé : comment empêcher les autres d'accéder à vos fichiers.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    7 min
+                </span>
+                <a href="proteger-fichiers-ordinateur-partage.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 9 -->
+        <article class="article-card">
+            <span class="article-tag">Comprendre</span>
+            <h2>Le Chiffrement AES-256 Expliqué Simplement</h2>
+            <p>Qu'est-ce que l'AES-256 ? Pourquoi est-il considéré comme extrêmement sûr ? Explication accessible.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    8 min
+                </span>
+                <a href="chiffrement-aes-256-explication.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 10 -->
+        <article class="article-card">
+            <span class="article-tag">Pro / Entreprise</span>
+            <h2>Sécuriser vos Fichiers en Télétravail sur Windows</h2>
+            <p>RGPD, données clients, documents confidentiels : comment protéger vos fichiers professionnels.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    9 min
+                </span>
+                <a href="securiser-fichiers-teletravail-windows.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+        <!-- Article 11 -->
+        <article class="article-card">
+            <span class="article-tag">Comparatif</span>
+            <h2>Les Meilleures Alternatives Gratuites à BitLocker</h2>
+            <p>Windows Home sans BitLocker ? Découvrez les meilleures alternatives de chiffrement gratuites.</p>
+            <div class="article-meta">
+                <span class="reading-time">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    10 min
+                </span>
+                <a href="alternative-bitlocker-gratuite-windows.html" class="article-link">Lire l'article →</a>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="nav-logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.83-3.23 9.36-7 10.57-3.77-1.21-7-5.74-7-10.57V6.3l7-3.12z"/><path d="M12 7a2.5 2.5 0 00-1 4.8V15h2v-3.2A2.5 2.5 0 0012 7z"/></svg>
+                SecureVault
+            </div>
+            <p>Chiffrement AES-256 pour protéger vos fichiers et dossiers sur Windows. Simple, rapide, sécurisé.</p>
+        </div>
+        <div class="footer-links">
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="https://securevault.fr/">Accueil</a></li>
+                    <li><a href="https://securevault.fr/#modes">Documentation</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Légal</h4>
+                <ul>
+                    <li><a href="https://securevault.fr/cgu.html">CGU</a></li>
+                    <li><a href="https://github.com/securevault-fr" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 SecureVault. Tous droits réservés.
+    </div>
+</footer>
+
+</body>
+</html>

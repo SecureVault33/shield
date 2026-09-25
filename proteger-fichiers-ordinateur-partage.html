@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+<meta name="google-site-verification" content="ISv3_cEcw6F74wpUbxIuSGGb1LUwIQ4hOJUrqkES1VI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Proteger ses Fichiers sur un Ordinateur Partage — Guide Windows 2026 | SecureVault</title>
+    <meta name="description" content="Famille, colocation, bureau partage : decouvrez comment empecher les autres utilisateurs d'acceder a vos fichiers sur un PC Windows partage.">
+    <link rel="canonical" href="https://securevault.fr/proteger-fichiers-ordinateur-partage.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Comment Proteger ses Fichiers sur un Ordinateur Partage — Guide Windows 2026">
+    <meta property="og:description" content="Famille, colocation, bureau partage : decouvrez comment empecher les autres utilisateurs d'acceder a vos fichiers sur un PC Windows partage.">
+    <meta property="og:url" content="https://securevault.fr/proteger-fichiers-ordinateur-partage.html">
+    <meta property="og:image" content="https://securevault.fr/securevault-social-preview.png">
+    <meta property="og:site_name" content="SecureVault">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Comment Proteger ses Fichiers sur un Ordinateur Partage — Guide Windows 2026">
+    <meta name="twitter:description" content="Famille, colocation, bureau partage : comment empecher les autres d'acceder a vos fichiers Windows.">
+    <meta name="twitter:image" content="https://securevault.fr/securevault-social-preview.png">
+
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="SecureVault">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Article -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Comment Proteger ses Fichiers sur un Ordinateur Partage — Guide Windows 2026",
+        "description": "Famille, colocation, bureau partage : decouvrez comment empecher les autres utilisateurs d'acceder a vos fichiers sur un PC Windows partage.",
+        "image": "https://securevault.fr/securevault-social-preview.png",
+        "author": {
+            "@type": "Organization",
+            "name": "SecureVault"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "SecureVault",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://securevault.fr/securevault-social-preview.png"
+            }
+        },
+        "datePublished": "2026-09-25",
+        "dateModified": "2026-09-25",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://securevault.fr/proteger-fichiers-ordinateur-partage.html"
+        }
+    }
+    </script>
+
+    <!-- Schema.org BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Accueil",
+                "item": "https://securevault.fr/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://securevault.fr/blog.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Proteger ses fichiers sur un ordinateur partage",
+                "item": "https://securevault.fr/proteger-fichiers-ordinateur-partage.html"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Schema.org FAQPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Comment empecher quelqu'un d'ouvrir mes fichiers sur un PC partage ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "La methode la plus simple est de creer des comptes utilisateurs separes sous Windows, puis de verrouiller vos dossiers sensibles avec SecureVault. Le Mode Rapide bloque l'acces instantanement via les permissions NTFS. Pour une protection renforcee, le Mode Fort chiffre vos fichiers en AES-256-GCM : meme un administrateur ne pourra pas lire leur contenu sans le mot de passe."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Un administrateur Windows peut-il acceder a mes fichiers verrouilles ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Avec de simples comptes utilisateurs separes, un administrateur peut acceder a tous les fichiers du PC. Le Mode Rapide de SecureVault bloque l'acces via les permissions NTFS, ce qui arrete la plupart des utilisateurs. Toutefois, un administrateur determine pourrait modifier ces permissions. Pour une protection totale, utilisez le Mode Fort (chiffrement AES-256-GCM) : le contenu du fichier est alors chiffre et illisible sans le mot de passe, meme pour un administrateur."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "SecureVault est-il adapte pour un PC familial avec des enfants ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Oui. SecureVault est ideal pour un PC familial. Le Mode Rapide permet de verrouiller un dossier en deux clics pour empecher les enfants d'y acceder ou de supprimer des fichiers importants. Pour les documents vraiment confidentiels (finances, documents administratifs), le Mode Fort ajoute un chiffrement AES-256-GCM avec mot de passe. SecureVault est gratuit, open source et compatible avec toutes les editions de Windows 10 et 11."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0d0d0d;
+            --bg-card: #111111;
+            --bg-code: #1a1a1a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --text-muted: #707070;
+            --accent: #c0392b;
+            --accent-light: #e74c3c;
+            --accent-glow: rgba(231, 76, 60, 0.15);
+            --border: #1e1e1e;
+            --border-light: #2a2a2a;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.75;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sticky Nav */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 5, 5, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 16px;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .nav-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--accent) !important;
+            color: #fff !important;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600 !important;
+            transition: background 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-light) !important;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 780px;
+            margin: 24px auto 0;
+            padding: 0 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-light);
+        }
+
+        .breadcrumb span {
+            margin: 0 8px;
+        }
+
+        /* Article Layout */
+        .article-container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 40px 16px 80px;
+        }
+
+        .article-meta {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-meta .category {
+            display: inline-block;
+            color: var(--accent-light);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .article-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        .article-info time {
+            color: var(--text-secondary);
+        }
+
+        .reading-time {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Content Styles */
+        .article-content h2 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+
+        .article-content h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+        }
+
+        .article-content p {
+            margin-bottom: 18px;
+            color: var(--text-secondary);
+        }
+
+        .article-content a {
+            color: var(--accent-light);
+            text-decoration: underline;
+            text-decoration-color: rgba(231, 76, 60, 0.3);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s;
+        }
+
+        .article-content a:hover {
+            text-decoration-color: var(--accent-light);
+        }
+
+        .article-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin-bottom: 18px;
+            padding-left: 24px;
+            color: var(--text-secondary);
+        }
+
+        .article-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Steps */
+        .steps {
+            margin: 24px 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding: 16px 16px 16px 60px;
+            margin-bottom: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: var(--accent-glow);
+            border-left: 4px solid var(--accent);
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+            margin: 28px 0;
+        }
+
+        .highlight-box p {
+            color: var(--text-primary) !important;
+            margin-bottom: 0;
+        }
+
+        /* Info box */
+        .info-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            padding: 20px 24px;
+            border-radius: 10px;
+            margin: 28px 0;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(192,57,43,0.12), rgba(231,76,60,0.06));
+            border: 1px solid rgba(192,57,43,0.25);
+            border-radius: 14px;
+            padding: 40px 32px;
+            text-align: center;
+            margin: 48px 0 24px;
+        }
+
+        .cta-section h2 {
+            margin-top: 0 !important;
+            margin-bottom: 12px !important;
+            font-size: 1.5rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none !important;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+
+        /* FAQ */
+        .faq-section {
+            margin-top: 48px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 18px 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-code);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            margin-left: 16px;
+            transition: transform 0.2s;
+        }
+
+        .faq-item.open .faq-question::after {
+            content: '-';
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 20px 18px;
+            background: var(--bg-card);
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        .faq-answer p {
+            margin-bottom: 0;
+        }
+
+        /* Related articles */
+        .related-articles {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .related-articles h2 {
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .related-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-decoration: none;
+            transition: border-color 0.2s, transform 0.15s;
+        }
+
+        .related-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .related-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 8px;
+        }
+
+        .related-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+            padding: 48px 16px;
+            margin-top: 60px;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .nav-links .hide-mobile {
+                display: none;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 28px 20px;
+            }
+
+            .steps li {
+                padding-left: 52px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" aria-label="Navigation principale">
+        <div class="nav-inner">
+            <a href="https://securevault.fr/" class="nav-logo" aria-label="SecureVault - Accueil">
+                <span class="logo-icon" aria-hidden="true">&#128274;</span>
+                SecureVault
+            </a>
+            <div class="nav-links">
+                <a href="https://securevault.fr/" class="hide-mobile">Accueil</a>
+                <a href="blog.html" class="hide-mobile">Blog</a>
+                <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.3.exe" class="nav-cta">Telecharger</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb" aria-label="Fil d'Ariane">
+        <a href="https://securevault.fr/">Accueil</a>
+        <span aria-hidden="true">&#8250;</span>
+        <a href="blog.html">Blog</a>
+        <span aria-hidden="true">&#8250;</span>
+        Proteger ses fichiers sur un ordinateur partage
+    </div>
+
+    <!-- Article -->
+    <article class="article-container" itemscope itemtype="https://schema.org/Article">
+        <header class="article-meta">
+            <span class="category">Guide Pratique</span>
+            <h1 itemprop="headline">Comment Proteger ses Fichiers sur un Ordinateur Partage</h1>
+            <div class="article-info">
+                <time datetime="2026-09-25" itemprop="datePublished">25 septembre 2026</time>
+                <span class="reading-time">&#9201; Lecture : 6 min</span>
+            </div>
+        </header>
+
+        <div class="article-content" itemprop="articleBody">
+
+            <p>Ordinateur familial, PC en colocation, poste de travail partage au bureau : les situations ou plusieurs personnes utilisent le meme ordinateur sont frequentes. Et dans chacune d'elles, une question revient : <strong>comment empecher les autres utilisateurs d'acceder a mes fichiers ?</strong></p>
+
+            <p>Par defaut, Windows ne protege pas vos dossiers personnels de maniere efficace. Un colocataire curieux, un enfant maladroit ou un collegue indiscret peut acceder a vos documents en quelques clics. Ce guide vous montre <strong>trois solutions concretes</strong> pour <strong>proteger vos fichiers sur un ordinateur partage</strong>, de la plus simple a la plus robuste.</p>
+
+            <div class="highlight-box">
+                <p><strong>En bref :</strong> Commencez par creer des comptes Windows separes, puis installez <a href="https://securevault.fr/">SecureVault</a> pour verrouiller ou chiffrer vos dossiers sensibles. Le Mode Rapide bloque l'acces instantanement, le Mode Fort (AES-256-GCM) rend vos fichiers illisibles sans mot de passe.</p>
+            </div>
+
+            <!-- Risques -->
+            <h2 id="risques">Les risques d'un ordinateur partage sans protection</h2>
+
+            <p>Quand plusieurs personnes partagent un PC sans precaution, les problemes sont previsibles :</p>
+
+            <ul>
+                <li><strong>Vos documents sont accessibles a tous</strong> : sur un compte Windows unique, n'importe qui peut ouvrir votre dossier Documents, parcourir vos photos, lire vos fichiers personnels. Il n'y a aucune barriere.</li>
+                <li><strong>Les enfants peuvent supprimer des fichiers importants</strong> : un double-clic malheureux, un glisser-deposer involontaire, et votre declaration d'impots ou votre memoire de fin d'etudes disparait.</li>
+                <li><strong>Aucune confidentialite pour vos photos et documents prives</strong> : photos personnelles, releves bancaires, courriers medicaux — tout est visible par quiconque s'assoit devant l'ecran.</li>
+                <li><strong>Risque de modification accidentelle</strong> : un colocataire qui cherche un fichier peut renommer, deplacer ou modifier vos documents sans meme s'en rendre compte.</li>
+            </ul>
+
+            <p>Que ce soit en famille, en colocation ou au bureau, la situation est la meme : <strong>sans protection active, vos fichiers sont exposes</strong>. Voyons comment y remedier.</p>
+
+            <!-- Solution 1 -->
+            <h2 id="comptes-separes">Solution 1 — Creer des comptes utilisateurs separes</h2>
+
+            <p>La premiere etape pour <strong>proteger vos fichiers sur un PC partage</strong> est de creer un compte Windows distinct pour chaque utilisateur. C'est gratuit, integre a Windows et ca prend 2 minutes.</p>
+
+            <ol class="steps">
+                <li><strong>Ouvrez les Parametres Windows</strong> (raccourci <code>Win + I</code>), puis allez dans <em>Comptes > Famille et autres utilisateurs</em>.</li>
+                <li><strong>Cliquez sur « Ajouter un autre utilisateur »</strong>. Vous pouvez creer un compte local (sans compte Microsoft) en cliquant sur <em>Je ne dispose pas des informations de connexion de cette personne</em>, puis <em>Ajouter un utilisateur sans compte Microsoft</em>.</li>
+                <li><strong>Definissez un nom et un mot de passe</strong> pour chaque utilisateur. Chaque personne aura son propre Bureau, son propre dossier Documents et ses propres parametres.</li>
+            </ol>
+
+            <div class="info-box">
+                <p><strong>Limitation importante :</strong> les comptes separes isolent les dossiers utilisateur (Bureau, Documents, Images), mais un compte administrateur peut toujours naviguer dans les dossiers des autres utilisateurs. De plus, les fichiers stockes sur un disque secondaire ou dans des dossiers partages restent accessibles a tous. C'est une bonne premiere etape, mais ce n'est pas suffisant pour une protection reelle.</p>
+            </div>
+
+            <!-- Solution 2 -->
+            <h2 id="securevault-verrouiller">Solution 2 — Verrouiller vos dossiers avec SecureVault</h2>
+
+            <p>Pour aller plus loin et <strong>bloquer l'acces a un dossier Windows</strong> de maniere fiable, SecureVault propose un <strong>Mode Rapide</strong> qui verrouille instantanement n'importe quel fichier ou dossier depuis le menu contextuel du clic droit.</p>
+
+            <h3>Comment ca fonctionne</h3>
+
+            <ol class="steps">
+                <li><strong>Installez SecureVault</strong> depuis le <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.3.exe">site officiel</a>. L'installation prend 30 secondes. Aucune inscription requise.</li>
+                <li><strong>Faites un clic droit</strong> sur le dossier ou fichier a proteger dans l'Explorateur Windows.</li>
+                <li><strong>Selectionnez « Verrouiller »</strong> dans le sous-menu SecureVault. L'acces est immediatement bloque pour tous les autres utilisateurs du PC.</li>
+                <li><strong>Pour deverrouiller</strong>, il suffit d'un nouveau clic droit et de choisir « Deverrouiller ». Vous seul pouvez le faire depuis votre session.</li>
+            </ol>
+
+            <p>Le Mode Rapide modifie les permissions NTFS du fichier pour <strong>interdire l'acces aux autres utilisateurs Windows</strong>. C'est instantane, quelle que soit la taille du dossier, et ne necessite aucun mot de passe. Ideal pour un <strong>PC familial</strong> ou un <strong>ordinateur en colocation</strong> : vos colocataires ou vos enfants ne peuvent tout simplement plus ouvrir vos dossiers.</p>
+
+            <div class="highlight-box">
+                <p><strong>Pourquoi c'est mieux que les comptes seuls :</strong> meme si un autre utilisateur a un compte administrateur, le Mode Rapide bloque l'ouverture directe de vos fichiers. Et pour une protection qui resiste meme a un administrateur determine, passez au chiffrement (solution suivante).</p>
+            </div>
+
+            <!-- Solution 3 -->
+            <h2 id="chiffrement">Solution 3 — Chiffrer vos fichiers sensibles</h2>
+
+            <p>Pour les documents reellement confidentiels — releves bancaires, photos privees, documents medicaux, fichiers professionnels — le <strong>verrouillage seul ne suffit pas</strong>. Si quelqu'un retire le disque dur ou demarre le PC depuis une cle USB, les permissions NTFS ne protegent plus rien.</p>
+
+            <p>La solution : <strong>chiffrer vos fichiers avec le Mode Fort de SecureVault</strong> (AES-256-GCM, chiffrement authentifie).</p>
+
+            <ul>
+                <li><strong>Clic droit > Chiffrer avec SecureVault</strong> : choisissez un mot de passe robuste, et le fichier est transforme en un fichier <code>.vault</code> dont le contenu est totalement illisible sans la cle.</li>
+                <li><strong>Meme si quelqu'un copie le fichier</strong> sur une cle USB ou l'envoie par e-mail, il reste chiffre et inexploitable.</li>
+                <li><strong>Aucun logiciel supplementaire</strong> n'est necessaire pour le dechiffrement : un clic droit sur le fichier <code>.vault</code> et votre mot de passe suffisent.</li>
+            </ul>
+
+            <p>Le chiffrement AES-256-GCM est la protection la plus robuste disponible pour un fichier individuel. C'est la solution recommandee pour vos <strong>photos personnelles</strong>, vos <strong>documents financiers</strong> et tout fichier que vous ne voulez jamais voir entre d'autres mains, meme sur un <strong>ordinateur partage en colocation</strong> ou au bureau.</p>
+
+            <div class="info-box">
+                <p><strong>Mode Rapide ou Mode Fort ?</strong> Utilisez le Mode Rapide au quotidien pour <strong>empecher vos enfants ou colocataires d'ouvrir un dossier</strong>. Reservez le Mode Fort aux fichiers vraiment sensibles qui necessitent un chiffrement complet. Les deux sont accessibles en un clic droit.</p>
+            </div>
+
+            <!-- Conseils pratiques -->
+            <h2 id="conseils">Conseils pratiques pour un PC partage</h2>
+
+            <p>Au-dela des solutions logicielles, quelques <strong>bonnes habitudes</strong> renforcent considerablement la protection de vos fichiers sur un ordinateur partage :</p>
+
+            <ol class="steps">
+                <li><strong>Creez des comptes Windows separes</strong> pour chaque utilisateur. C'est la base : chacun a son propre espace, son propre Bureau, ses propres parametres.</li>
+                <li><strong>Verrouillez votre session quand vous quittez le PC</strong>. Le raccourci <code>Win + L</code> verrouille l'ecran instantanement. Prenez l'habitude de l'utiliser a chaque fois que vous vous levez, meme pour 30 secondes.</li>
+                <li><strong>Chiffrez vos fichiers sensibles</strong> avec SecureVault (Mode Fort). Un fichier chiffre est protege meme si quelqu'un accede a votre session restee ouverte.</li>
+                <li><strong>N'enregistrez pas vos mots de passe dans le navigateur</strong> sur un PC partage. Utilisez plutot un gestionnaire de mots de passe (Bitwarden, KeePass) qui se verrouille automatiquement.</li>
+                <li><strong>Activez la deconnexion automatique</strong>. Dans les Parametres Windows, configurez la mise en veille apres quelques minutes d'inactivite avec mot de passe au reveil.</li>
+            </ol>
+
+            <p>Ces reflexes, combines au verrouillage et au chiffrement de vos fichiers, forment une <strong>protection complete pour un PC familial, un ordinateur de colocation ou un poste de travail partage</strong>.</p>
+
+            <!-- FAQ -->
+            <div class="faq-section">
+                <h2 id="faq">FAQ — Questions frequentes</h2>
+
+                <div class="faq-item open">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="true">
+                        Comment empecher quelqu'un d'ouvrir mes fichiers sur un PC partage ?
+                    </div>
+                    <div class="faq-answer">
+                        <p>La methode la plus simple est de creer des comptes utilisateurs separes sous Windows, puis de verrouiller vos dossiers sensibles avec SecureVault. Le Mode Rapide bloque l'acces instantanement via les permissions NTFS. Pour une protection renforcee, le Mode Fort chiffre vos fichiers en AES-256-GCM : meme un administrateur ne pourra pas lire leur contenu sans le mot de passe.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+                        Un administrateur Windows peut-il acceder a mes fichiers verrouilles ?
+                    </div>
+                    <div class="faq-answer">
+                        <p>Avec de simples comptes utilisateurs separes, un administrateur peut acceder a tous les fichiers du PC. Le Mode Rapide de SecureVault bloque l'acces via les permissions NTFS, ce qui arrete la plupart des utilisateurs. Toutefois, un administrateur determine pourrait modifier ces permissions. Pour une protection totale, utilisez le Mode Fort (chiffrement AES-256-GCM) : le contenu du fichier est alors chiffre et illisible sans le mot de passe, meme pour un administrateur.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+                        SecureVault est-il adapte pour un PC familial avec des enfants ?
+                    </div>
+                    <div class="faq-answer">
+                        <p>Oui. SecureVault est ideal pour un PC familial. Le Mode Rapide permet de verrouiller un dossier en deux clics pour empecher les enfants d'y acceder ou de supprimer des fichiers importants. Pour les documents vraiment confidentiels (finances, documents administratifs), le Mode Fort ajoute un chiffrement AES-256-GCM avec mot de passe. SecureVault est gratuit, open source et compatible avec toutes les editions de Windows 10 et 11.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <h2>Protegez vos fichiers sur votre PC partage</h2>
+                <p>Verrouillez et chiffrez vos dossiers en un clic droit. Gratuit, open source, compatible Windows 10 et 11.</p>
+                <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.3.exe" class="cta-button">
+                    Telecharger SecureVault gratuitement
+                </a>
+            </div>
+
+            <!-- Related articles -->
+            <div class="related-articles">
+                <h2>Articles connexes</h2>
+                <div class="related-grid">
+                    <a href="cacher-dossier-windows-11.html" class="related-card">
+                        <h3>Cacher un dossier sur Windows 11</h3>
+                        <p>Methodes pour rendre un dossier invisible dans l'Explorateur Windows.</p>
+                    </a>
+                    <a href="verrouiller-fichier-windows-clic-droit.html" class="related-card">
+                        <h3>Verrouiller un fichier Windows en clic droit</h3>
+                        <p>La methode la plus rapide pour proteger un fichier en 2 secondes.</p>
+                    </a>
+                    <a href="comment-chiffrer-fichier-windows.html" class="related-card">
+                        <h3>Comment chiffrer un fichier sur Windows</h3>
+                        <p>Guide complet du chiffrement de fichiers avec 3 methodes comparees.</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand">SecureVault</div>
+                <div class="footer-copy">&copy; 2026 SecureVault. Tous droits reserves.</div>
+            </div>
+            <div class="footer-links">
+                <a href="https://securevault.fr/">Accueil</a>
+                <a href="https://securevault.fr/#features">Documentation</a>
+                <a href="https://securevault.fr/terms">Mentions legales</a>
+                <a href="https://github.com/SecureVault33/shield" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FAQ toggle script -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var item = this.parentElement;
+                var isOpen = item.classList.contains('open');
+                item.classList.toggle('open');
+                this.setAttribute('aria-expanded', !isOpen);
+            });
+            btn.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

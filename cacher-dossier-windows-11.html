@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="google-site-verification-code">
+    <title>Comment Cacher un Dossier sur Windows 11 — 3 Méthodes (+ la Vraie Solution)</title>
+    <meta name="description" content="3 méthodes pour cacher un dossier sur Windows 11 : attributs cachés, PowerShell, logiciel. Pourquoi cacher ne suffit pas et comment vraiment protéger vos fichiers.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://securevault.fr/cacher-dossier-windows-11">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Comment Cacher un Dossier sur Windows 11 — 3 Méthodes (+ la Vraie Solution)">
+    <meta property="og:description" content="3 méthodes pour cacher un dossier sur Windows 11 : attributs cachés, PowerShell, logiciel. Pourquoi cacher ne suffit pas et comment vraiment protéger vos fichiers.">
+    <meta property="og:url" content="https://securevault.fr/cacher-dossier-windows-11">
+    <meta property="og:site_name" content="SecureVault">
+    <meta property="og:locale" content="fr_FR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Comment Cacher un Dossier sur Windows 11 — 3 Méthodes (+ la Vraie Solution)">
+    <meta name="twitter:description" content="3 méthodes pour cacher un dossier sur Windows 11 : attributs cachés, PowerShell, logiciel. Pourquoi cacher ne suffit pas et comment vraiment protéger vos fichiers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #050505;
+            --bg-card: #111111;
+            --bg-card-alt: #0a0a0a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --accent: #c0392b;
+            --accent-hover: #e74c3c;
+            --border-color: #222222;
+            --code-bg: #1a1a1a;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5,5,5,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 60px;
+        }
+        .nav-logo {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-logo svg { flex-shrink: 0; }
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+        .btn-download {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-download:hover { background: var(--accent-hover); }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            max-width: 780px;
+            margin: 24px auto 0;
+            padding: 0 16px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb span { margin: 0 6px; }
+
+        /* ARTICLE */
+        article {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 32px 16px 60px;
+        }
+        article h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+        .article-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        article h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 48px 0 16px;
+            letter-spacing: -0.01em;
+        }
+        article h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 28px 0 10px;
+        }
+        article p {
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        article ul, article ol {
+            margin: 0 0 16px 20px;
+            color: var(--text-primary);
+        }
+        article li { margin-bottom: 6px; }
+        article a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-decoration-color: rgba(192,57,43,0.4);
+            text-underline-offset: 2px;
+            transition: text-decoration-color 0.2s;
+        }
+        article a:hover { text-decoration-color: var(--accent); }
+        article strong { font-weight: 600; }
+
+        code, .code-block {
+            font-family: 'Courier New', monospace;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.88em;
+            color: #e0e0e0;
+        }
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            overflow-x: auto;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        /* STEPS */
+        .steps { margin: 20px 0; }
+        .step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .step-num {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .step-content { flex: 1; }
+
+        /* HIGHLIGHT BOX */
+        .highlight-box {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            margin: 24px 0;
+        }
+        .highlight-box.warning {
+            border-left-color: var(--warning);
+        }
+        .highlight-box.success {
+            border-left-color: var(--success);
+        }
+        .highlight-box p:last-child { margin-bottom: 0; }
+        .highlight-box strong { display: block; margin-bottom: 4px; }
+
+        /* TABLE */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 24px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            min-width: 580px;
+        }
+        thead th {
+            background: var(--bg-card);
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+        tbody td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:nth-child(even) { background: var(--bg-card-alt); }
+        .check { color: var(--success); }
+        .cross { color: var(--accent); }
+
+        /* FAQ */
+        .faq { margin: 24px 0; }
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .faq-question {
+            width: 100%;
+            background: var(--bg-card);
+            border: none;
+            padding: 16px 20px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+        .faq-question:hover { background: #161616; }
+        .faq-chevron {
+            transition: transform 0.2s;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+        .faq-item.open .faq-chevron { transform: rotate(180deg); }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-answer-inner {
+            padding: 0 20px 16px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-answer { max-height: 300px; }
+
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #1a0a0a 0%, var(--bg-card) 100%);
+            border: 1px solid rgba(192,57,43,0.3);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        .cta-box h3 {
+            font-size: 1.25rem;
+            margin: 0 0 10px;
+            color: var(--text-primary);
+        }
+        .cta-box p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.92rem;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .cta-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+        /* RELATED */
+        .related-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 24px 0;
+        }
+        @media (min-width: 600px) {
+            .related-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .related-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px 20px;
+            text-decoration: none;
+            transition: border-color 0.2s, transform 0.15s;
+            display: block;
+        }
+        .related-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .related-card h4 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .related-card p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 32px 16px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 600px) {
+            article h1 { font-size: 1.55rem; }
+            article h2 { font-size: 1.2rem; }
+            .nav-links a:not(.btn-download) { display: none; }
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Comment Cacher un Dossier sur Windows 11 : 3 Méthodes et la Vraie Solution",
+        "description": "3 méthodes pour cacher un dossier sur Windows 11 : attributs cachés, PowerShell, logiciel. Pourquoi cacher ne suffit pas et comment vraiment protéger vos fichiers.",
+        "author": {
+            "@type": "Organization",
+            "name": "SecureVault",
+            "url": "https://securevault.fr"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "SecureVault",
+            "url": "https://securevault.fr"
+        },
+        "datePublished": "2025-06-15",
+        "dateModified": "2025-06-15",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://securevault.fr/cacher-dossier-windows-11"
+        },
+        "inLanguage": "fr"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Accueil",
+                "item": "https://securevault.fr/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://securevault.fr/blog.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Cacher un Dossier sur Windows 11",
+                "item": "https://securevault.fr/cacher-dossier-windows-11"
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Comment retrouver un dossier caché sur Windows 11 ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ouvrez l'Explorateur de fichiers, cliquez sur Affichage dans la barre de menu, puis cochez Éléments masqués. Tous les dossiers cachés par attribut apparaîtront en semi-transparent. Pour les fichiers système cachés via attrib +s, allez dans Options des dossiers > Affichage et décochez « Masquer les fichiers protégés du système »."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Est-ce que cacher un dossier le protège vraiment ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Non. Cacher un dossier ne fait que le rendre invisible dans l'Explorateur par défaut. N'importe qui peut réafficher les fichiers cachés en quelques clics. Pour une vraie protection, il faut verrouiller l'accès avec un mot de passe ou chiffrer le dossier avec un logiciel comme SecureVault."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Comment cacher des photos personnelles sur mon PC Windows ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Vous pouvez cacher vos photos en appliquant l'attribut Caché au dossier qui les contient. Mais pour réellement protéger des photos personnelles ou confidentielles, utilisez le chiffrement : SecureVault permet de verrouiller et chiffrer vos photos d'un clic droit, les rendant inaccessibles sans votre mot de passe."
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="https://securevault.fr/" class="nav-logo">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            SecureVault
+        </a>
+        <div class="nav-links">
+            <a href="https://securevault.fr/">Accueil</a>
+            <a href="blog.html">Blog</a>
+            <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.3.exe" class="btn-download">Télécharger</a>
+        </div>
+    </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    <a href="https://securevault.fr/">Accueil</a> <span>›</span>
+    <a href="blog.html">Blog</a> <span>›</span>
+    Cacher un Dossier sur Windows 11
+</div>
+
+<!-- ARTICLE -->
+<article>
+    <h1>Comment Cacher un Dossier sur Windows 11 : 3 Méthodes et la Vraie Solution</h1>
+    <div class="article-meta">
+        <span>Mis à jour le 15 juin 2025</span>
+        <span>·</span>
+        <span>Lecture 6 min</span>
+    </div>
+
+    <p>Vous voulez <strong>cacher un dossier sur Windows 11</strong> pour qu'il ne soit pas visible dans l'Explorateur de fichiers ? Vous avez peut-être des photos personnelles, des documents confidentiels ou simplement des fichiers que vous préférez garder à l'abri des regards.</p>
+    <p>Voici <strong>3 méthodes concrètes</strong> pour rendre un dossier invisible sur Windows, de la plus simple à la plus technique. Mais nous allons aussi vous expliquer pourquoi cacher ne suffit pas, et quelle solution offre une vraie protection.</p>
+
+    <!-- METHODE 1 -->
+    <h2>Méthode 1 — Cacher un dossier via les attributs Windows</h2>
+    <p>C'est la méthode la plus connue pour <strong>cacher un dossier sur Windows 11</strong>. Elle utilise l'attribut "Caché" intégré au système.</p>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">Faites un <strong>clic droit</strong> sur le dossier que vous souhaitez cacher, puis cliquez sur <strong>Propriétés</strong>.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">Dans l'onglet Général, cochez la case <strong>Caché</strong> en bas de la fenêtre.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">Cliquez sur <strong>Appliquer</strong>, puis choisissez "Appliquer les modifications à ce dossier, aux sous-dossiers et aux fichiers" et validez avec <strong>OK</strong>.</div>
+        </div>
+    </div>
+
+    <p>Le dossier disparaît de l'Explorateur. Pour le retrouver, ouvrez l'Explorateur, allez dans <strong>Affichage</strong> et cochez <strong>Éléments masqués</strong>.</p>
+
+    <div class="highlight-box warning">
+        <strong>Limitation importante</strong>
+        <p>N'importe qui peut réafficher les dossiers cachés en 2 clics dans les paramètres d'affichage de l'Explorateur. Cette méthode cache visuellement, mais ne protège rien.</p>
+    </div>
+
+    <!-- METHODE 2 -->
+    <h2>Méthode 2 — Créer un dossier invisible (nom et icône transparents)</h2>
+    <p>Cette astuce permet de <strong>rendre un dossier totalement invisible</strong> sur le bureau ou dans un répertoire : ni nom, ni icône visible.</p>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">Créez un nouveau dossier. Pour le renommer avec un <strong>nom invisible</strong>, maintenez <code>Alt</code> et tapez <code>0160</code> sur le pavé numérique, puis validez. Le nom apparaît vide.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">Faites un clic droit sur le dossier > <strong>Propriétés</strong> > onglet <strong>Personnaliser</strong> > <strong>Changer d'icône</strong>.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">Scrollez dans la liste des icônes et sélectionnez une <strong>icône transparente</strong> (un emplacement vide). Validez.</div>
+        </div>
+    </div>
+
+    <p>Résultat : le dossier est invisible sur le bureau. Amusant, mais absolument pas sécurisé. Un simple <strong>Ctrl+A</strong> (tout sélectionner) révèle le dossier instantanément.</p>
+
+    <div class="highlight-box warning">
+        <strong>Verdict</strong>
+        <p>C'est une curiosité, pas une solution de sécurité. Si quelqu'un cherche vos fichiers, il les trouvera en quelques secondes.</p>
+    </div>
+
+    <!-- METHODE 3 -->
+    <h2>Méthode 3 — Cacher via PowerShell/CMD (attrib +h +s)</h2>
+    <p>Pour aller plus loin, vous pouvez <strong>marquer un dossier comme fichier système caché</strong>. Cela le rend invisible même quand l'option "Éléments masqués" est activée.</p>
+
+    <p>Ouvrez un <strong>Terminal</strong> (PowerShell ou Invite de commandes en administrateur) et tapez :</p>
+
+    <div class="code-block">attrib +h +s +r "C:\Chemin\Vers\MonDossierSecret"</div>
+
+    <p>Explication des paramètres :</p>
+    <ul>
+        <li><code>+h</code> : applique l'attribut <strong>Caché</strong> (Hidden)</li>
+        <li><code>+s</code> : marque comme <strong>fichier système</strong> (System) — invisible même avec les éléments masqués affichés</li>
+        <li><code>+r</code> : passe en <strong>lecture seule</strong> (Read-only)</li>
+    </ul>
+
+    <p>Pour réafficher le dossier, utilisez la commande inverse :</p>
+    <div class="code-block">attrib -h -s -r "C:\Chemin\Vers\MonDossierSecret"</div>
+
+    <div class="highlight-box warning">
+        <strong>Plus discret, mais pas protégé</strong>
+        <p>Le dossier est mieux caché qu'avec la méthode 1, mais il reste trouvable via la barre de recherche Windows, via un logiciel tiers, ou en décochant "Masquer les fichiers protégés du système" dans les options de dossier. Et surtout : aucun chiffrement. Les données restent lisibles en clair.</p>
+    </div>
+
+    <!-- POURQUOI CACHER NE SUFFIT PAS -->
+    <h2>Pourquoi cacher un dossier ne suffit pas</h2>
+    <p>Les trois méthodes ci-dessus ont un point commun : elles <strong>cachent visuellement</strong> le dossier, mais ne le <strong>protègent pas</strong>.</p>
+
+    <ul>
+        <li><strong>Caché ne veut pas dire protégé.</strong> Tout utilisateur de votre PC peut réafficher les fichiers cachés en modifiant un paramètre d'affichage.</li>
+        <li><strong>Aucune de ces méthodes n'utilise de mot de passe.</strong> Pas besoin d'authentification pour accéder au contenu.</li>
+        <li><strong>Pas de chiffrement = données lisibles.</strong> Si quelqu'un accède à votre disque dur (vol, perte, partage de PC), vos fichiers sont en clair.</li>
+        <li><strong>En cas de vol de votre ordinateur</strong>, un simple branchement du disque sur un autre PC suffit pour lire tous vos fichiers "cachés" sans aucune difficulté.</li>
+    </ul>
+
+    <p>Si vous voulez réellement <strong>protéger des fichiers confidentiels</strong>, cacher des photos personnelles ou sécuriser des documents sensibles, il faut aller au-delà de la simple dissimulation.</p>
+
+    <!-- SECUREVAULT -->
+    <h2>La vraie solution : verrouiller ET chiffrer avec SecureVault</h2>
+    <p><a href="https://securevault.fr/">SecureVault</a> est un logiciel gratuit pour Windows qui va plus loin que cacher : il <strong>verrouille</strong> et <strong>chiffre</strong> vos dossiers et fichiers.</p>
+
+    <h3>Deux niveaux de protection</h3>
+    <ul>
+        <li><strong>Quick Lock (verrouillage rapide)</strong> : bloque l'accès au dossier via les permissions NTFS. Personne ne peut ouvrir, copier ou déplacer le dossier sans déverrouillage. C'est comme cacher, mais avec une serrure.</li>
+        <li><strong>Strong Mode (chiffrement fort)</strong> : chiffre le contenu avec l'algorithme <strong>AES-256-GCM</strong>. Même si quelqu'un copie vos fichiers ou accède directement au disque, les données sont illisibles sans votre mot de passe.</li>
+    </ul>
+
+    <h3>Comment protéger un dossier avec SecureVault</h3>
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.3.exe">Téléchargez SecureVault</a> et installez-le. L'installation prend moins d'une minute.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">Faites un <strong>clic droit</strong> sur le dossier à protéger et sélectionnez <strong>SecureVault > Verrouiller</strong>.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">Choisissez le mode : <strong>Quick Lock</strong> pour un verrouillage rapide, ou <strong>Strong Mode</strong> pour un chiffrement complet.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">Définissez votre mot de passe. Le dossier est maintenant protégé : verrouillé et, en mode Strong, chiffré.</div>
+        </div>
+    </div>
+
+    <div class="highlight-box success">
+        <strong>Gratuit et simple</strong>
+        <p>SecureVault est gratuit pour un usage personnel. La version Pro (20 €, licence à vie) ajoute le chiffrement de volumes et des fonctionnalités avancées. Pas d'abonnement.</p>
+    </div>
+
+    <!-- TABLEAU COMPARATIF -->
+    <h2>Cacher vs Verrouiller vs Chiffrer — Tableau comparatif</h2>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Critère</th>
+                    <th>Cacher (attribut)</th>
+                    <th>Cacher (PowerShell)</th>
+                    <th>Verrouiller (SecureVault)</th>
+                    <th>Chiffrer (SecureVault)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Visible dans l'Explorateur</td>
+                    <td><span class="cross">Oui, réaffichable</span></td>
+                    <td><span class="cross">Oui, réaffichable</span></td>
+                    <td><span class="check">Non accessible</span></td>
+                    <td><span class="check">Non accessible</span></td>
+                </tr>
+                <tr>
+                    <td>Protection par mot de passe</td>
+                    <td><span class="cross">Non</span></td>
+                    <td><span class="cross">Non</span></td>
+                    <td><span class="check">Oui</span></td>
+                    <td><span class="check">Oui</span></td>
+                </tr>
+                <tr>
+                    <td>Résiste au vol du PC</td>
+                    <td><span class="cross">Non</span></td>
+                    <td><span class="cross">Non</span></td>
+                    <td><span class="cross">Non</span></td>
+                    <td><span class="check">Oui (AES-256)</span></td>
+                </tr>
+                <tr>
+                    <td>Facilité d'utilisation</td>
+                    <td><span class="check">Très facile</span></td>
+                    <td>Moyenne (commande)</td>
+                    <td><span class="check">Très facile (clic droit)</span></td>
+                    <td><span class="check">Facile (clic droit)</span></td>
+                </tr>
+                <tr>
+                    <td>Gratuit</td>
+                    <td><span class="check">Oui</span></td>
+                    <td><span class="check">Oui</span></td>
+                    <td><span class="check">Oui</span></td>
+                    <td><span class="check">Oui</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FAQ -->
+    <h2>Questions fréquentes</h2>
+    <div class="faq">
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Comment retrouver un dossier caché sur Windows 11 ?
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Ouvrez l'Explorateur de fichiers, cliquez sur <strong>Affichage</strong> dans la barre de menu, puis cochez <strong>Éléments masqués</strong>. Tous les dossiers cachés par attribut apparaîtront en semi-transparent. Pour les fichiers système cachés via <code>attrib +s</code>, allez dans <strong>Options des dossiers > Affichage</strong> et décochez "Masquer les fichiers protégés du système d'exploitation".
+                </div>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Est-ce que cacher un dossier le protège vraiment ?
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Non. Cacher un dossier ne fait que le rendre invisible dans l'Explorateur par défaut. N'importe qui peut réafficher les fichiers cachés en quelques clics. Pour une vraie protection, il faut <strong>verrouiller l'accès avec un mot de passe</strong> ou <strong>chiffrer le dossier</strong> avec un logiciel comme SecureVault.
+                </div>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Comment cacher des photos personnelles sur mon PC Windows ?
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Vous pouvez cacher vos photos en appliquant l'attribut Caché au dossier qui les contient (clic droit > Propriétés > Caché). Mais pour réellement <strong>protéger des photos personnelles</strong> ou confidentielles, utilisez le chiffrement : SecureVault permet de verrouiller et chiffrer vos photos d'un clic droit, les rendant inaccessibles sans votre mot de passe.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+        <h3>Protégez vos fichiers au lieu de simplement les cacher</h3>
+        <p>SecureVault verrouille et chiffre vos dossiers en un clic droit. Gratuit, sans abonnement.</p>
+        <a href="https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.3.exe" class="cta-btn">Télécharger SecureVault</a>
+    </div>
+
+    <!-- RELATED -->
+    <h2>Articles connexes</h2>
+    <div class="related-grid">
+        <a href="proteger-dossier-mot-de-passe-windows.html" class="related-card">
+            <h4>Protéger un dossier par mot de passe sur Windows</h4>
+            <p>Les méthodes natives et logicielles pour verrouiller un dossier avec un mot de passe.</p>
+        </a>
+        <a href="verrouiller-fichier-windows-clic-droit.html" class="related-card">
+            <h4>Verrouiller un fichier d'un clic droit sur Windows</h4>
+            <p>Comment verrouiller instantanément un fichier ou dossier depuis le menu contextuel.</p>
+        </a>
+        <a href="proteger-fichiers-ordinateur-partage.html" class="related-card">
+            <h4>Protéger ses fichiers sur un ordinateur partagé</h4>
+            <p>Les bonnes pratiques pour garder vos données privées sur un PC familial ou professionnel.</p>
+        </a>
+    </div>
+</article>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2025 SecureVault. Tous droits réservés.</p>
+    <p style="margin-top:6px;">
+        <a href="https://securevault.fr/">Accueil</a> · <a href="blog.html">Blog</a> · <a href="https://securevault.fr/mentions-legales">Mentions légales</a>
+    </p>
+</footer>
+
+</body>
+</html>

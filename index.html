@@ -5,7 +5,7 @@
 <meta name="google-site-verification" content="ISv3_cEcw6F74wpUbxIuSGGb1LUwIQ4hOJUrqkES1VI" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SecureVault — Chiffrer et Protéger vos Fichiers Windows en 2 Clics</title>
-<meta name="description" content="SecureVault chiffre et verrouille vos fichiers Windows depuis le clic droit. Chiffrement AES-256 militaire ou verrouillage instantané. Gratuit, sans abonnement. Windows 10 et 11.">
+<meta name="description" content="SecureVault chiffre et verrouille vos fichiers Windows depuis le clic droit. Chiffrement authentifié AES-256-GCM ou verrouillage instantané. Gratuit, sans abonnement. Windows 10 et 11.">
 <meta name="keywords" content="chiffrer fichier windows, protéger dossier mot de passe, verrouiller fichier windows, chiffrement AES-256, logiciel chiffrement fichier gratuit, sécuriser fichiers windows, protéger fichier windows 10, protéger fichier windows 11, alternative veracrypt, clic droit chiffrement">
 <meta name="author" content="SecureVault">
 <meta name="robots" content="index, follow">
@@ -15,7 +15,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="SecureVault — Chiffrer et Protéger vos Fichiers Windows en 2 Clics">
-<meta property="og:description" content="Chiffrez et verrouillez vos fichiers Windows depuis le clic droit. AES-256 militaire, gratuit, sans abonnement.">
+<meta property="og:description" content="Chiffrez et verrouillez vos fichiers Windows depuis le clic droit. AES-256-GCM authentifié, gratuit, sans abonnement.">
 <meta property="og:url" content="https://securevault.fr/">
 <meta property="og:image" content="https://securevault.fr/securevault-social-preview.png">
 <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SecureVault — Chiffrer et Protéger vos Fichiers Windows">
-<meta name="twitter:description" content="Chiffrez et verrouillez vos fichiers Windows depuis le clic droit. AES-256 militaire, gratuit, sans abonnement.">
+<meta name="twitter:description" content="Chiffrez et verrouillez vos fichiers Windows depuis le clic droit. AES-256-GCM authentifié, gratuit, sans abonnement.">
 <meta name="twitter:image" content="https://securevault.fr/securevault-social-preview.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,13 +63,7 @@
   "downloadUrl": "https://github.com/SecureVault33/shield/releases/latest/download/SecureVault_Setup_1.0.3.exe",
   "softwareVersion": "1.0.3",
   "fileSize": "10MB",
-  "screenshot": "https://securevault.fr/securevault-social-preview.png",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "1",
-    "bestRating": "5"
-  }
+  "screenshot": "https://securevault.fr/securevault-social-preview.png"
 }
 </script>
 
@@ -116,7 +110,7 @@
       "name": "SecureVault est-il compatible avec mon antivirus ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Oui. Lors du premier lancement, votre antivirus peut signaler SecureVault car il modifie les permissions de fichiers — c'est normal et sans risque. Ajoutez SecureVault en exception. Le code source de la version gratuite est disponible sur GitHub pour vérification."
+        "text": "Oui. Lors du premier lancement, votre antivirus peut signaler SecureVault car il modifie les permissions de fichiers. Avant d'ajouter une exception, vérifiez le hash SHA-256 de l'installateur sur notre page GitHub pour confirmer l'authenticité du fichier. Le code source de la version gratuite est entièrement auditable sur GitHub."
       }
     },
     {
@@ -946,6 +940,10 @@ section { padding: 6rem 2rem; }
   .cta-section h2 { font-size: 1.8rem; }
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+  .guides-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ─── ANIMATIONS ─── */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
@@ -973,6 +971,7 @@ section { padding: 6rem 2rem; }
     <a href="#how">Comment ça marche</a>
     <a href="#pricing">Tarifs</a>
     <a href="#faq">FAQ</a>
+    <a href="blog.html">Blog</a>
     <a href="#download" class="nav-cta">Télécharger</a>
   </div>
 </nav>
@@ -993,7 +992,7 @@ section { padding: 6rem 2rem; }
       <p>
         SecureVault ajoute un menu de sécurité directement dans votre clic droit Windows.
         Verrouillez l'accès à vos fichiers en un instant ou chiffrez-les avec le
-        <strong>chiffrement AES-256 de grade militaire</strong>. Gratuit, sans abonnement, 100% local.
+        <strong>chiffrement authentifié AES-256-GCM avec dérivation Argon2id</strong>. Gratuit, sans abonnement, 100% local.
       </p>
       <div class="hero-actions">
         <a href="#download" class="btn btn-primary">
@@ -1064,7 +1063,7 @@ section { padding: 6rem 2rem; }
   <div class="container">
     <div class="modes-header reveal">
       <h2>Deux modes de protection pour vos fichiers Windows</h2>
-      <p>Choisissez la sécurité adaptée à chaque situation. Du verrouillage quotidien au chiffrement inviolable de vos dossiers.</p>
+      <p>Choisissez la sécurité adaptée à chaque situation. Du verrouillage quotidien au chiffrement renforcé de vos dossiers.</p>
     </div>
     <div class="modes-grid">
       <article class="mode-card reveal">
@@ -1086,15 +1085,15 @@ section { padding: 6rem 2rem; }
         <div class="mode-icon strong" aria-hidden="true">&#x1f6e1;&#xfe0f;</div>
         <h3>Mode Fort — Chiffrement AES-256-GCM</h3>
         <p class="mode-desc">
-          Chiffrement complet de grade militaire. Même en cas de vol du disque dur,
-          vos données restent totalement illisibles sans le mot de passe. Protection maximale pour fichiers confidentiels.
+          Chiffrement authentifié AES-256-GCM. Même en cas de vol du disque dur,
+          vos données restent illisibles sans le mot de passe. Protection renforcée pour fichiers confidentiels.
         </p>
         <div class="mode-specs">
           <div class="mode-spec"><span class="check" aria-hidden="true">&#x2713;</span> Chiffrement AES-256-GCM authentifié</div>
           <div class="mode-spec"><span class="check" aria-hidden="true">&#x2713;</span> Dérivation de clé Argon2id (anti brute-force)</div>
           <div class="mode-spec"><span class="check" aria-hidden="true">&#x2713;</span> Chiffrement de fichiers et dossiers entiers</div>
           <div class="mode-spec"><span class="check" aria-hidden="true">&#x2713;</span> Clé de récupération générée automatiquement</div>
-          <div class="mode-spec"><span class="check" aria-hidden="true">&#x2713;</span> Suppression sécurisée de l'original après chiffrement</div>
+          <div class="mode-spec"><span class="check" aria-hidden="true">&#x2713;</span> Suppression renforcée de l'original après chiffrement (3 passes d'écrasement)</div>
         </div>
       </article>
     </div>
@@ -1319,6 +1318,27 @@ section { padding: 6rem 2rem; }
         <p>VeraCrypt, BitLocker, AxCrypt, SecureVault : quel outil choisir pour chiffrer vos fichiers ? Test et avis.</p>
         <span class="guide-link">Lire le comparatif &#x2192;</span>
       </a>
+      <a href="proteger-dossier-windows-famille-sans-bitlocker.html" class="guide-card reveal">
+        <div class="guide-icon" aria-hidden="true">&#x1f3e0;</div>
+        <h3>Protéger un dossier sur Windows Famille sans BitLocker</h3>
+        <p>Pas de BitLocker sur Windows Home ? 4 méthodes alternatives pour chiffrer et verrouiller vos dossiers facilement.</p>
+        <span class="guide-link">Lire le guide &#x2192;</span>
+      </a>
+      <a href="chiffrer-cle-usb-windows.html" class="guide-card reveal">
+        <div class="guide-icon" aria-hidden="true">&#x1f4be;</div>
+        <h3>Chiffrer une clé USB sur Windows : guide complet</h3>
+        <p>Protégez vos données sur clé USB et disque externe. Comparatif SecureVault, BitLocker To Go et VeraCrypt.</p>
+        <span class="guide-link">Lire le guide &#x2192;</span>
+      </a>
+      <a href="alternative-bitlocker-gratuite-windows.html" class="guide-card reveal">
+        <div class="guide-icon" aria-hidden="true">&#x1f504;</div>
+        <h3>Alternative gratuite à BitLocker pour Windows</h3>
+        <p>Les 5 meilleures alternatives à BitLocker en 2026. Comparatif détaillé pour chiffrer vos fichiers sans BitLocker.</p>
+        <span class="guide-link">Lire le comparatif &#x2192;</span>
+      </a>
+    </div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="blog.html" class="reveal" style="display: inline-block; padding: 0.8rem 2rem; border: 2px solid #e74c3c; border-radius: 8px; color: #e74c3c; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s ease;">Voir tous les articles &#x2192;</a>
     </div>
   </div>
 </section>
@@ -1367,7 +1387,7 @@ section { padding: 6rem 2rem; }
       <a href="terms.html">CGU</a>
       <a href="refund.html">Remboursement</a>
       <a href="https://github.com/SecureVault33/shield">GitHub</a>
-      <a href="comment-chiffrer-fichier-windows.html">Blog</a>
+      <a href="blog.html">Blog</a>
     </nav>
   </div>
 </footer>
